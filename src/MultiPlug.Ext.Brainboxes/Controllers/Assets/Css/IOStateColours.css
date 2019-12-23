@@ -1,0 +1,15 @@
+﻿.IOState{
+    padding-left: 5px;
+    line-height: 30px;
+    border-left-width: 6px;
+    border-left-style: solid;
+    border-left-color: rgb(204, 204, 204);
+    font-weight: bold;
+}
+ 
+.IOStateRed{
+    border-left-color: red;
+}
+.IOStateGreen{
+    border-left-color: green;
+}

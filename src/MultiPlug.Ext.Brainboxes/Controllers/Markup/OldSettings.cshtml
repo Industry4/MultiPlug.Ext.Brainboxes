@@ -1,0 +1,289 @@
+﻿@model MultiPlug.Ext.Brainboxes.Models.SettingsViewModel
+
+<div class="row-fluid">
+    <div class="box">
+        <div class="span5">
+            <a href="/"><img alt="Brainboxes Logo" src="assets/brainboxes/images/brainboxes.png"></a>
+        </div>
+        <div class="span2">
+        </div>
+        <div class="span3">
+        </div>
+        <div class="span2">
+        </div>
+    </div>
+</div>
+
+<form class="form-horizontal" action="" method="post" accept-charset="utf-8" enctype="application/x-www-form-urlencoded">
+    <h3 class="box-header">Home</h3>
+    <div class="box">
+
+        <ul class="breadcrumb">
+            <li><a href="/extensions/brainboxes/">Home</a></li>
+        </ul>
+
+        <ul class="nav nav-tabs" id="myTab">
+            <li class="active">
+                <a href="#status">Status</a>
+            </li>
+
+            <li class="dropdown">
+                <a class="dropdown-toggle"
+                   data-toggle="dropdown"
+                   href="#">
+                    Devices
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <!-- links -->
+                    <li class=""><a href="#devices">View Devices</a></li>
+                    <li class=""><a id="start-discovery" class="prevent-tab" href="#">Start Device Discovery</a></li>
+                    <li class=""><a class="prevent-tab" href="/extensions/brainboxes/discovery/">Discovery Settings</a></li>
+                </ul>
+            </li>
+
+            <li><a href="#subscriptions">Subscriptions</a></li>
+            <li><a href="#events">Events</a></li>
+        </ul>
+        <div id="myTabContent" class="tab-content" style="margin-bottom: 10px">
+            <div class="tab-pane fade in active" id="status">
+                <p>The current status of the Brainboxes.</p>
+                <div class="row-fluid">
+                    <ul style="list-style: none;">
+                        @foreach (var Device in @Model.Devices)
+                        {
+                            <li>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <div class="span1">
+                                            <p>Name</p>
+                                        </div>
+                                        <div class="span3">
+                                            <p>@Device.Name</p>
+                                        </div>
+                                        <div class="span1">
+                                            <p>@Device.Status</p>
+                                        </div>
+                                        <div class="span3">
+                                            <button type="button" id="cmd-dis-connect-@Device.Guid" class="btn btn-blue">Dis/Connect</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                        <li>
+                            <div class="control-group">
+                                <label class="control-label">Trace Log</label>
+                                <div class="controls">
+                                    <textarea id="textarea-log" rows="3" style="margin: 0px;width: 550px;height: 225px;">@Model.Log</textarea>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="devices">
+                <p>The current Brainboxes connected.</p>
+                <div class="row-fluid">
+                    <ul id="devices-list" style="list-style: none;">
+                        @foreach (var Device in @Model.Devices)
+                        {
+                            <li>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <div class="span1">
+                                            <p>Name</p>
+                                        </div>
+                                        <div class="span3">
+                                            <input name="[@Device.Guid][devicename][]" class="input-medium" type="text" placeholder="10 Char Max" maxlength="10" value="@Device.Name">
+                                        </div>
+                                        <div class="span1">
+                                            <p>IP</p>
+                                        </div>
+                                        <div class="span3">
+                                            <input name="[@Device.Guid][deviceip][]" class="input-medium" type="text" placeholder="IP Address" value="@Device.Ip">
+                                        </div>
+                                        <div class="span1">
+                                            <button id="[@Device.Guid][deviceip][]" type="button" class="item btn btn-red">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="subscriptions">
+                <div class="row-fluid">
+                    @foreach (var Device in @Model.Devices)
+                    {
+                    <h4>Device @Device.Name</h4>
+                    <div class="accordion" id="accordion-@Device.Guid">
+                        @foreach (var Output in Device.Outputs)
+                        {
+                        <div class="accordion-group">
+                            <div class="accordion-heading">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-@Device.Guid" href="#collapse-@Device.Guid-@Output.Name">
+                                    Output @Output.Name
+                                </a>
+                            </div>
+                            <div id="collapse-@Device.Guid-@Output.Name" class="accordion-body collapse" style="height: 0px;">
+                                <div class="accordion-inner">
+
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Event ID</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var Subscription in Output.Subscriptions)
+                                            {
+                                                <tr>
+                                                    <td><a href="extensions/brainboxes/subscription/?device=@Device.Guid&output=@Output.Name&id=@Subscription.Guid">@Subscription.EventId</a></td>
+                                                    <td>
+                                                        <a class="btn btn-red delete-channel" href="extensions/brainboxes/subscription/delete/?device=@Device.Guid&output=@Output.Name&id=@Subscription.Guid"><i class="icon-trash"></i></a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                    <div class="row-fluid">
+                                        <div class="span12">
+                                            <a class="btn btn-green" href="extensions/brainboxes/subscription/?device=@Device.Guid&output=@Output.Name&id=new"><i class="icon-plus-sign"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                    }
+                </div>
+            </div>
+            <div class="tab-pane fade" id="events">
+                <p>Event created by the Brainboxes devices.</p>
+                <div class="row-fluid">
+                    <div class="accordion" id="accordion-events">
+                        @foreach (var Device in @Model.Devices)
+                        {
+                        <div class="accordion-group">
+                            <div class="accordion-heading">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-@Device.Guid" href="#collapse-@Device.Guid-events">
+                                    Device @Device.Name
+                                </a>
+                            </div>
+                            <div class="accordion-body collapse" id="collapse-@Device.Guid-events" style="height: 0px;">
+                                <div class="accordion-inner">
+
+                                    <table class="table">
+                                        <tr>
+                                            <th>Event ID</th>
+                                            <th>Description</th>
+                                        </tr>
+                                        @foreach (var Event in Device.Events)
+                                        {
+                                            <tr>
+                                                
+                                                <td>
+                                                    <input type="hidden" name="Guid" value="@Event.Guid">
+                                                    <input name="[@Device.Guid][@Event.Guid][eventid]" class="input-block-level" type="text" placeholder="Event ID" value="@Event.EventId">
+                                                </td>
+                                                <td><input name="[@Device.Guid][@Event.Guid][description]" class="input-block-level" type="text" placeholder="Description" value="@Event.Description"></td>
+                                            </tr>
+                                        }
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-actions">
+        <button type = "submit" value="submit" class="btn btn-primary">Save changes</button>
+        <button type = "button" class="btn">Cancel</button>
+    </div>
+</form>
+
+<script>
+    $('#myTab a:not(.prevent-tab)').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    })
+
+    $('#start-discovery').click(function (e) {
+        e.preventDefault();
+        $.connection.wS.server.send({ Id: "@Model.DiscoverDeviceId", Pairs: [] });
+    })
+
+    function newDeviceElement(theGuid, theIpAddress) {
+        return '<li><div class="control-group"><div class="controls"><div class="span1"><p>Name</p></div><div class="span3"><input name="[' + theGuid + '][devicename][]" class="input-medium" type="text" placeholder="10 Char Max" maxlength="10" value=""></div><div class="span1"><p>IP</p></div><div class="span3"><input name="[' + theGuid + '][deviceip][]" class="input-medium" type="text" placeholder="IP Address" value="' + theIpAddress + '"></div><div class="span1"><button id="[' + theGuid + '][deviceip][]" type="button" class="item btn btn-red">Delete</button></div></div></div></li>';
+    }
+
+    function newSubElement(outPutName, deviceGuid, ranNum) {
+        return '<li><div class="control-group"><label class="control-label">Event ID</label><div class="controls"><div class="span8"><select name="[' + deviceGuid + '][' + outPutName + '][subid][new-' + ranNum + ']" class="js-mpevent-select"><option value=""></option></select></div><div class=\"span4\"><button type=\"button\" class=\"item btn btn-red\">Delete</button></div></div></div></li>';
+    }
+
+    $(function () {
+
+        @foreach (var Device in @Model.Devices)
+        {
+            foreach (var Output in Device.Outputs)
+            {
+            <text>
+        $('#@Output.Name-newsub-@Device.Guid').on('click', function () {
+            $('#@Output.Name-subslist-@Device.Guid').append(newSubElement("@Output.Name", "@Device.Guid", Math.floor((Math.random() * 100000) + 1)));
+            applyselectize($('#@Output.Name-subslist-@Device.Guid li:last-child').find('.js-mpevent-select'));
+        });
+        </text>
+            }
+        <text>
+        $('#cmd-dis-connect-@Device.Guid').on('click', function () {
+            var Group = { Id: "@Device.EventIdConnectCmd", Pairs: [] };
+            $.connection.wS.server.send(Group);
+        });
+        </text>
+        }
+
+        $('#new-device').on('click', function () {
+            $('#devices-list').append(newDeviceElement("new-" + Math.floor((Math.random() * 100000) + 1), ""))
+        });
+
+        $(document).on('click', '.item', function () {
+
+            $('<input>').attr({
+                type: 'hidden',
+                name: $(this).attr('id'),
+                value: '-delete-'
+            }).appendTo('form');
+
+            $(this).parent().parent().parent().parent().remove();
+
+        });
+    });
+
+    $.connection.wS.on("Send", function (id, Group) {
+
+        if (id == "@Model.LogEventId") {
+            var parmfile = $('#textarea-log');
+            parmfile.text(parmfile.text() + Group.Pairs[0].Value + "\n");
+
+            if (parmfile.length)
+                parmfile.scrollTop(parmfile[0].scrollHeight - parmfile.height());
+        }
+        else if (id == '@Model.DeviceDiscoveredId') {
+            $('#devices-list').append(newDeviceElement(Group.Pairs[0].Value, Group.Pairs[1].Value));
+        }
+    });
+
+    @*window.addEventListener("multiplugReady", function (e) {
+        $.connection.wS.server.send({ Id: "@Model.DiscoverDeviceId", Pairs: [] });
+    });*@
+
+</script>

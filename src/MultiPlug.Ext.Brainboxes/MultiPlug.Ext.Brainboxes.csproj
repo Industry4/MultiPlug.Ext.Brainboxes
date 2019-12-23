@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FBA6EEE9-BCE5-4BE2-A3A0-0A2EC7394680}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MultiPlug.Ext.Brainboxes</RootNamespace>
+    <AssemblyName>MultiPlug.Ext.Brainboxes</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Brainboxes.IO, Version=1.5.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Brainboxes.IO.1.5.0.4\lib\net45\Brainboxes.IO.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Costura, Version=1.6.2.0, Culture=neutral, PublicKeyToken=9919ef960d84173d, processorArchitecture=MSIL">
+      <HintPath>..\packages\Costura.Fody.1.6.2\lib\dotnet\Costura.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="MultiPlug.Base, Version=1.0.37.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MultiPlug.Base.1.0.37\lib\net472\MultiPlug.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MultiPlug.Extension.Core, Version=1.0.51.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MultiPlug.Extension.Core.1.0.51\lib\net472\MultiPlug.Extension.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.Http">
+      <HintPath>References\System.Web.Http.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Components\Defaults\BBDefaults.cs" />
+    <Compile Include="Components\Device\BBConnectStatus.cs" />
+    <Compile Include="Components\Device\BBDeviceConnect.cs" />
+    <Compile Include="Components\Device\BBDeviceConnectStatus.cs" />
+    <Compile Include="Components\Device\BBDeviceInformation.cs" />
+    <Compile Include="Components\Device\BBDeviceLogging.cs" />
+    <Compile Include="Components\Device\BBDeviceMACResult.cs" />
+    <Compile Include="Components\Device\BBDeviceRestart.cs" />
+    <Compile Include="Components\Device\BBDevices.cs" />
+    <Compile Include="Controllers\API\APIEndpoint.cs" />
+    <Compile Include="Controllers\API\Control\ControlController.cs" />
+    <Compile Include="Controllers\API\Devices\DevicesController.cs" />
+    <Compile Include="Controllers\Assets\Css\CssController.cs" />
+    <Compile Include="Controllers\Assets\Js\JavaScriptsController.cs" />
+    <Compile Include="Controllers\Settings\Defaults\DefaultsController.cs" />
+    <Compile Include="Controllers\Settings\Device\DeviceController.cs" />
+    <Compile Include="Controllers\Settings\Device\DeviceDeleteController.cs" />
+    <None Include="Controllers\Settings\Device\DeviceNotFound.cshtml" />
+    <Compile Include="Controllers\Settings\Home\HomeController.cs" />
+    <Compile Include="Core.cs" />
+    <Compile Include="Components\Device\BBDevice.cs" />
+    <Compile Include="Components\Device\BBOutput.cs" />
+    <Compile Include="Components\Discovery\BBDiscovery.cs" />
+    <Compile Include="Components\Device\BBEventFire.cs" />
+    <Compile Include="Brainboxes.cs" />
+    <Compile Include="Components\Device\BBEventConsumer.cs" />
+    <Compile Include="Logging.cs" />
+    <Compile Include="Models\API\DeviceIO.cs" />
+    <Compile Include="Models\API\GetDeviceIO.cs" />
+    <Compile Include="Models\API\SetDeviceIO.cs" />
+    <Compile Include="Models\BBDeviceEvent.cs" />
+    <Compile Include="Models\Components\Device\BBOutputProperties.cs" />
+    <Compile Include="Models\Components\Device\DeviceInformation.cs" />
+    <Compile Include="Models\Components\Discovery\BBDiscoveryProperties.cs" />
+    <Compile Include="Models\Components\Defaults\BBDefaultProperties.cs" />
+    <Compile Include="Models\Components\Device\BBDeviceProperties.cs" />
+    <Compile Include="Models\Components\Device\BBSubscription.cs" />
+    <Compile Include="Models\Components\Discovery\BBDeviceFound.cs" />
+    <Compile Include="Models\Components\Device\BBSubscriptionProperties.cs" />
+    <Compile Include="Models\OLD\DeviceModel.cs" />
+    <Compile Include="Models\Settings\Defaults\DefaultsValues.cs" />
+    <Compile Include="Models\Settings\Device\DeviceOutputViewModel.cs" />
+    <Compile Include="Models\OLD\DeviceViewModel.cs" />
+    <Compile Include="Models\Settings\Device\NotFound.cs" />
+    <Compile Include="Models\Settings\Discovery\DiscoveryViewModel.cs" />
+    <Compile Include="Models\Settings\Device\ESViewModel.cs" />
+    <Compile Include="Models\EventModel.cs" />
+    <Compile Include="Models\Load\Device.cs" />
+    <Compile Include="Models\Load\Discovery.cs" />
+    <Compile Include="Models\Load\Root.cs" />
+    <Compile Include="Models\OLD\SettingsViewModel.cs" />
+    <Compile Include="Models\Settings\Device\Device.cs" />
+    <Compile Include="Models\Settings\Device\DevicePost.cs" />
+    <Compile Include="Models\Settings\Home\Home.cs" />
+    <Compile Include="Models\Settings\Home\HomePost.cs" />
+    <Compile Include="Models\Settings\Device\Subscription.cs" />
+    <Compile Include="Models\Settings\Home\HomeDevice.cs" />
+    <Compile Include="Models\SubModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Controllers\Assets\AssetsEndpoint.cs" />
+    <Compile Include="Controllers\Assets\Images\ImageController.cs" />
+    <Compile Include="Controllers\Settings\SettingsApp.cs" />
+    <Compile Include="Controllers\Settings\Discovery\DiscoveryController.cs" />
+    <Compile Include="Controllers\Settings\OLDHomeController.cs" />
+    <Compile Include="Controllers\Settings\Subscription\SubscriptionController.cs" />
+    <Compile Include="Controllers\Settings\Subscription\SubscriptionDeleteController.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Controllers\Settings\Defaults\Defaults.cshtml" />
+    <None Include="Controllers\Settings\Device\Device.cshtml" />
+    <None Include="FodyWeavers.xml" />
+    <None Include="Resources\Images\brainboxes-logo.png" />
+    <None Include="Controllers\Settings\Subscription\Subscription.cshtml" />
+    <None Include="Controllers\Settings\Home\Settings.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Controllers\Settings\Discovery\Discovery.cshtml" />
+    <None Include="Controllers\Markup\OldSettings.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Controllers\Assets\Css\IOStateColours.css" />
+    <Content Include="Controllers\Assets\Css\ToggleSwitch.css" />
+    <Content Include="Controllers\Assets\Js\device.js" />
+    <Content Include="Controllers\Assets\Js\devices.js" />
+    <Content Include="favicon.ico" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="..\packages\Fody.2.1.3\build\netstandard1.2\Fody.targets" Condition="Exists('..\packages\Fody.2.1.3\build\netstandard1.2\Fody.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Fody.2.1.3\build\netstandard1.2\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.2.1.3\build\netstandard1.2\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets'))" />
+  </Target>
+  <Import Project="..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets" Condition="Exists('..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
