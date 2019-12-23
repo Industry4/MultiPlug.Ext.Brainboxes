@@ -1,0 +1,34 @@
+﻿<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>MultiPlug.Ext.Brainboxes</id>
+    <version>1.0.12</version>
+    <title>$title$</title>
+    <authors>4IR.UK</authors>
+    <owners>4IR.UK</owners>
+    <projectUrl>https://github.com/Industry4/MultiPlug.Ext.Brainboxes</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/Industry4/MultiPlug.Ext.Brainboxes/master/media/multiplug.ico</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Brainboxes Extension for MultiPlug</description>
+    <releaseNotes>Application Use:
+* Connect to Brainboxes Ltd digital Input and Output hardware - For the full product range view http://www.brainboxes.com/remote-io
+
+Change Log:
+1.0.12 Enhancement: Complete refresh of the User Interface
+1.0.10 Enhancement: Rising Edge and Falling Edge has now been merged into one event.
+1.0.9 Enhancement: Implemented new MultiPlug.Base 1.0.25 contracts.
+1.0.8 Bug: Init fail.
+Enhancement: I/O will toggle is no High or Low Value found in the event pairs.
+1.0.7 Enhancement: User Interface changes, 1.0.6 feature enhanced so for-each subscription values to seek from event pairs for Highs and Lows can be set. Toggling introduced in 1.0.6 has been removed for now.
+1.0.6 Enhancement: Subscription Output seeks pair 'type' of 'value' with value of 0 or 1, and if not found toggles the output (on/off)
+Bug: Device settings were being lost on startup.
+
+Brainboxes is a trademark of Brainboxes Ltd
+</releaseNotes>
+    <copyright>4IR.UK 2018 (Brainboxes is a trademark of Brainboxes Ltd)</copyright>
+    <tags>Brainboxes IOT INDUSTRY_4.0 INDUSTRY 4.0 4IR M2M Fog_Computing</tags>
+    <dependencies>
+      <dependency id="MultiPlug.Core" version="2.2.56" />
+    </dependencies>
+  </metadata>
+</package>
