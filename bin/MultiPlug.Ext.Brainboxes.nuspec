@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>MultiPlug.Ext.Brainboxes</id>
-    <version>1.0.12</version>
+    <version>1.0.13</version>
     <title>$title$</title>
     <authors>4IR.UK</authors>
     <owners>4IR.UK</owners>
@@ -14,6 +14,7 @@
 * Connect to Brainboxes Ltd digital Input and Output hardware - For the full product range view http://www.brainboxes.com/remote-io
 
 Change Log:
+1.0.13 Applied new Base classes
 1.0.12 Enhancement: Complete refresh of the User Interface
 1.0.10 Enhancement: Rising Edge and Falling Edge has now been merged into one event.
 1.0.9 Enhancement: Implemented new MultiPlug.Base 1.0.25 contracts.

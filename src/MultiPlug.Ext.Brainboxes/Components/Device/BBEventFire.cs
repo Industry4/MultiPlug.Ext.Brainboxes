@@ -5,7 +5,6 @@ namespace MultiPlug.Ext.Brainboxes.Components.Device
 {
     public class BBEventFire : EventableBase
     {
-        public override event MPEventHandler Update;
         private string m_Id = "";
 
         public string MyProperty { get; set; }

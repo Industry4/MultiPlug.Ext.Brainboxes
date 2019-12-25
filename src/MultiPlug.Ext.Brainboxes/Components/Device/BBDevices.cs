@@ -8,11 +8,7 @@ namespace MultiPlug.Ext.Brainboxes.Components.Device
 {
     class BBDevices : EventableBase
     {
-        public override event MPEventHandler Update;
-
         private static object m_ArrayLock = new object();
-
-
 
         public Event Event { get; private set; }
 

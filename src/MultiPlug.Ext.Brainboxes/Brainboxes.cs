@@ -17,13 +17,6 @@ namespace MultiPlug.Ext.Brainboxes
 {
     public class Brainboxes : MultiPlugExtension
     {
-        public override event EventHandler<Event[]> EventsUpdated;
-        public override event EventHandler<Subscription[]> SubscriptionsUpdated;
-        #pragma warning disable 0067
-        public override event EventHandler<HttpEndpoint[]> HttpEndpointsUpdated;
-        public override event EventHandler<RazorTemplate[]> NewRazorTemplates;
-        #pragma warning restore 0067
-
         private HttpEndpoint[] m_Dashboards;
 
         public Brainboxes()
@@ -36,12 +29,12 @@ namespace MultiPlug.Ext.Brainboxes
 
         private void OnSubscriptionsUpdated(object sender, Subscription[] e)
         {
-            SubscriptionsUpdated(this, e);
+            MultiPlugSignals.Updates.Subscriptions();
         }
 
         private void OnEventsUpdated(object sender, Event[] e)
         {
-            EventsUpdated(this, e);
+            MultiPlugSignals.Updates.Events();
         }
 
         public override HttpEndpoint[] HttpEndpoints

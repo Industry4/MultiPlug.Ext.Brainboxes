@@ -12,8 +12,6 @@ namespace MultiPlug.Ext.Brainboxes
 
         private static Logging m_Instance = null;
 
-        public override event MPEventHandler Update;
-
         public static Logging Instance
         {
             get

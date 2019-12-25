@@ -10,8 +10,6 @@ namespace MultiPlug.Ext.Brainboxes.Components.Device
     {
         StatusEnum m_Status = StatusEnum.Disconnected;
 
-        public override event MPEventHandler Update;
-
         public Event Event { get; private set; }
 
         public event EventHandler<StatusEnum> StatusUpdate;

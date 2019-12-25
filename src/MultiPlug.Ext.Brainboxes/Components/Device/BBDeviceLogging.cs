@@ -11,8 +11,6 @@ namespace MultiPlug.Ext.Brainboxes.Components.Device
         private string m_LogPath = string.Empty;
         private bool m_DeletingLogs = false;
 
-        public override event MPEventHandler Update;
-
         public Event Event { get; private set; }
 
         public BBDeviceLogging(BBDeviceProperties theProperties)
