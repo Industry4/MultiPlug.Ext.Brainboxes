@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>MultiPlug.Ext.Brainboxes</id>
-    <version>1.0.13</version>
+    <version>1.0.14</version>
     <title>$title$</title>
     <authors>4IR.UK</authors>
     <owners>4IR.UK</owners>
@@ -14,6 +14,7 @@
 * Connect to Brainboxes Ltd digital Input and Output hardware - For the full product range view http://www.brainboxes.com/remote-io
 
 Change Log:
+1.0.14 Applied new Base classes
 1.0.13 Applied new Base classes
 1.0.12 Enhancement: Complete refresh of the User Interface
 1.0.10 Enhancement: Rising Edge and Falling Edge has now been merged into one event.
@@ -27,9 +28,9 @@ Bug: Device settings were being lost on startup.
 Brainboxes is a trademark of Brainboxes Ltd
 </releaseNotes>
     <copyright>4IR.UK 2018 (Brainboxes is a trademark of Brainboxes Ltd)</copyright>
-    <tags>Brainboxes IOT INDUSTRY_4.0 INDUSTRY 4.0 4IR M2M Fog_Computing</tags>
+    <tags>Brainboxes IOT INDUSTRY_4.0 INDUSTRY 4.0 4IR M2M Edge_Computing</tags>
     <dependencies>
-      <dependency id="MultiPlug.Core" version="2.2.56" />
+      <dependency id="MultiPlug.Core" version="2.2.60" />
     </dependencies>
   </metadata>
 </package>
