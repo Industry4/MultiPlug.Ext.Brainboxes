@@ -8,11 +8,11 @@ namespace MultiPlug.Ext.Brainboxes.Models.Components.Device
     {
         public IOLine IOLine { get; set; }
         [DataMember]
-        public string HighKey { get; set; }
+        public string HighSubject { get; set; }
         [DataMember]
         public string HighValue { get; set; }
         [DataMember]
-        public string LowKey { get; set; }
+        public string LowSubject { get; set; }
         [DataMember]
         public string LowValue { get; set; }
     }

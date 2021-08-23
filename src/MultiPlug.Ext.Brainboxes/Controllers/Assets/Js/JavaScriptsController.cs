@@ -8,7 +8,7 @@ using MultiPlug.Ext.Brainboxes.Properties;
 namespace MultiPlug.Ext.Brainboxes.Controllers.Assets.Js
 {
     [Route("js/*")]
-    public class JavaScriptsController : Controller
+    public class JavaScriptsController : AssetsEndpoint
     {
         public Response Get(string theName)
         {

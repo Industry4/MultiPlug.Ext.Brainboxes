@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using MultiPlug.Base.Exchange;
 using MultiPlug.Ext.Brainboxes.Models;
 using MultiPlug.Ext.Brainboxes.Models.Components.Device;
+using MultiPlug.Base.Exchange.API;
+using MultiPlug.Ext.Brainboxes.Diagnostics;
 
 namespace MultiPlug.Ext.Brainboxes.Components.Device
 {
@@ -15,34 +17,38 @@ namespace MultiPlug.Ext.Brainboxes.Components.Device
     {
         public event EventHandler EventsUpdated;
         public event EventHandler SubscriptionsUpdated;
-        public event EventHandler<string> DeviceException;
+        public event Action DeviceInformationFetchError;
 
         public BBDeviceConnect Connection { get; private set; }
         private BBDeviceRestart m_DeviceRestart;
-
-        public BBDeviceLogging Logging { get; private set; }
 
         private Event[] m_Events = new Event[0];
         private Subscription[] m_Subscriptions = new Subscription[0];
 
         private BBDeviceInformation m_DeviceInformation = new BBDeviceInformation();
 
-        public BBDevice(string theGuid)
+        private ILoggingService m_LoggingService;
+
+        public string LogEventId { get { return m_LoggingService.EventId; } }
+
+        public BBDevice(string theGuid, ILoggingService theLoggingService)
         {
             Guid = theGuid;
 
+            m_LoggingService = theLoggingService;
+
             Connection = new BBDeviceConnect(this);
-            Connection.Log += OnWriteLog;
+            Connection.Log += OnLogWriteEntry;
             Connection.Connected += OnDeviceConnected;
             m_DeviceRestart = new BBDeviceRestart(this);
-            Logging = new BBDeviceLogging(this);
 
 
             IPAddressUpdated += Connection.OnIPAddressUpdated;
             NameUpdated += Connection.OnNameUpdated;
             IPAddressUpdated += m_DeviceInformation.BeginFetch;
             m_DeviceInformation.FetchCompleted += OnDeviceInformationFetchCompleted;
-            m_DeviceInformation.Log += OnWriteLog;
+            m_DeviceInformation.Log += OnLogWriteEntry;
+            m_DeviceInformation.FetchError += () => DeviceInformationFetchError?.Invoke();
 
             string FixID = System.Guid.NewGuid().ToString();
 
@@ -152,7 +158,7 @@ namespace MultiPlug.Ext.Brainboxes.Components.Device
                     }
                     else
                     {
-                        NewIOEvent.Object = new BBEventFire(NewIOEvent.Id, NewIOEvent.Keys[0], NewIOEvent.RisingEdgeValue, NewIOEvent.FallingEdgeValue);
+                     //   NewIOEvent.Object = new BBEventFire(NewIOEvent.Id, NewIOEvent.Keys[0], NewIOEvent.RisingEdgeValue, NewIOEvent.FallingEdgeValue);
                         IOEventsList.Add(NewIOEvent);
                     }
 
@@ -192,7 +198,12 @@ namespace MultiPlug.Ext.Brainboxes.Components.Device
             }
         }
 
-        private void OnDeviceConnected(object sender, EventArgs e)
+        internal void Start()
+        {
+            Array.ForEach(IOEvents, IOEvent => IOEvent.FireOnStart());
+        }
+
+        private void OnDeviceConnected()
         {
             ConstructSubscriptions();
             ConstructEvents();
@@ -203,7 +214,6 @@ namespace MultiPlug.Ext.Brainboxes.Components.Device
             var list = new List<Event>();
             list.Add(ConnectButtonEvent);
             list.Add(RestartButtonEvent);
-            list.Add(Logging.Event);
             list.Add(Connection.Status.Event);
             list.AddRange(IOEvents);
             list.AddRange(Outputs.Select(o => o.UIToggleEvent));
@@ -237,22 +247,15 @@ namespace MultiPlug.Ext.Brainboxes.Components.Device
             }
         }
 
-        private void LogWrite(string theLogLine)
+        private void OnLogWriteEntry(EventLogEntryCodes theLogCode, string[] theArg)
         {
-            Logging.Log(theLogLine);
-            DeviceException?.Invoke(this, theLogLine);
-        }
-
-        private void OnWriteLog(object sender, string e)
-        {
-            LogWrite(e);
+            m_LoggingService.WriteEntry((uint)theLogCode, theArg);
         }
 
         public void DeleteAndTidyUp()
         {
             m_DeviceInformation.Cancel();
             Connection.Disconnect();
-            Logging.Delete();
         }
 
         public Task Connect(CancellationToken theCancellationToken)
@@ -272,13 +275,13 @@ namespace MultiPlug.Ext.Brainboxes.Components.Device
                     }
                     else
                     {
-                        Task.Delay(1000);
+                        Task.Delay(2000).Wait();
                     }
                 }
             });
         }
 
-        private void OnDeviceInformationFetchCompleted(object sender, DeviceInformation theDeviceInformation)
+        private void OnDeviceInformationFetchCompleted(DeviceInformation theDeviceInformation)
         {
             if (string.IsNullOrEmpty(MACAddress))
             {
@@ -294,8 +297,7 @@ namespace MultiPlug.Ext.Brainboxes.Components.Device
                 Firmware = theDeviceInformation.Firmware;
                 ProductModel = theDeviceInformation.ProductModel;
                 MACFetch = MACResult.Matched;
-                LogWrite("Device of IP [" + IP + "] MAC Address set to " + MACAddress);
-
+                OnLogWriteEntry(EventLogEntryCodes.MACAddressSet, new string[] { IP, MACAddress });
             }
             else
             {
@@ -317,7 +319,7 @@ namespace MultiPlug.Ext.Brainboxes.Components.Device
                 else
                 {
                     MACFetch = MACResult.Unmatched;
-                    LogWrite("Device of IP [" + IP + "] has a different MAC Address than expected. Expected [" + MACAddress + "] Actual [" + theDeviceInformation.MACAddress + "]");
+                    OnLogWriteEntry(EventLogEntryCodes.MACMissMatch, new string[] { IP, MACAddress, theDeviceInformation.MACAddress });
                 }
             }
         }
@@ -351,9 +353,9 @@ namespace MultiPlug.Ext.Brainboxes.Components.Device
             {
                 OutputSearch.Add(theUpdatedSubscriptions.SubscriptionId, new BBSubscriptionProperties
                 {
-                    HighKey = theUpdatedSubscriptions.HighKey,
+                    HighSubject = theUpdatedSubscriptions.HighKey,
                     HighValue = theUpdatedSubscriptions.HighValue,
-                    LowKey = theUpdatedSubscriptions.LowKey,
+                    LowSubject = theUpdatedSubscriptions.LowKey,
                     LowValue = theUpdatedSubscriptions.LowValue
                 });
 
@@ -372,9 +374,9 @@ namespace MultiPlug.Ext.Brainboxes.Components.Device
 
                     Subscription.Update(new BBSubscriptionProperties
                     {
-                        HighKey = theUpdatedSubscriptions.HighKey,
+                        HighSubject = theUpdatedSubscriptions.HighKey,
                         HighValue = theUpdatedSubscriptions.HighValue,
-                        LowKey = theUpdatedSubscriptions.LowKey,
+                        LowSubject = theUpdatedSubscriptions.LowKey,
                         LowValue = theUpdatedSubscriptions.LowValue
                     });
                 }

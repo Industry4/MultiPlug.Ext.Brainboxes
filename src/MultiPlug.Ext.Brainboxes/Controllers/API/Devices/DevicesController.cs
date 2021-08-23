@@ -7,7 +7,7 @@ using MultiPlug.Base.Http;
 namespace MultiPlug.Ext.Brainboxes.Controllers.API.Devices
 {
     [Route("")]
-    class DevicesController : Controller
+    class DevicesController : APIEndpoint
     {
         public Response Get()
         {

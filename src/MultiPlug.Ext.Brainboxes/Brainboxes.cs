@@ -1,17 +1,11 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
-
 using MultiPlug.Base.Exchange;
 using MultiPlug.Extension.Core;
 using MultiPlug.Extension.Core.Http;
-
 using MultiPlug.Ext.Brainboxes.Models;
 using MultiPlug.Ext.Brainboxes.Properties;
-using MultiPlug.Ext.Brainboxes.Controllers.Settings;
-using MultiPlug.Ext.Brainboxes.Controllers.Assets;
 using MultiPlug.Ext.Brainboxes.Models.Components.Device;
-using MultiPlug.Ext.Brainboxes.Controllers.API;
 
 namespace MultiPlug.Ext.Brainboxes
 {
@@ -21,28 +15,21 @@ namespace MultiPlug.Ext.Brainboxes
 
         public Brainboxes()
         {
-            m_Dashboards = new HttpEndpoint[] { new SettingsApp(), new AssetsEndpoint(), new APIEndpoint() };
-
             Core.Instance.EventsUpdated += new EventHandler<Event[]>(OnEventsUpdated);
             Core.Instance.SubscriptionsUpdated += new EventHandler<Subscription[]>(OnSubscriptionsUpdated);
+
+            MultiPlugServices.Logging.RegisterDefinitions(Diagnostics.EventLogDefinitions.DefinitionsId, Diagnostics.EventLogDefinitions.Definitions, true);
+            Core.Instance.MultiPlugServices = MultiPlugServices;
         }
 
         private void OnSubscriptionsUpdated(object sender, Subscription[] e)
         {
-            MultiPlugSignals.Updates.Subscriptions();
+            MultiPlugActions.Extension.Updates.Subscriptions();
         }
 
         private void OnEventsUpdated(object sender, Event[] e)
         {
-            MultiPlugSignals.Updates.Events();
-        }
-
-        public override HttpEndpoint[] HttpEndpoints
-        {
-            get
-            {
-                return m_Dashboards;
-            }
+            MultiPlugActions.Extension.Updates.Events();
         }
 
         public override Event[] Events
@@ -116,6 +103,10 @@ namespace MultiPlug.Ext.Brainboxes
 
             InitProcess.Clear();
 
+            MultiPlugActions.Extension.Updates.Events();
+
+            MultiPlugActions.Extension.Updates.Subscriptions();
+
             Core.Instance.InitialiseDevices();
         }
 
@@ -124,17 +115,22 @@ namespace MultiPlug.Ext.Brainboxes
             return Core.Instance;
         }
 
+        public override void Start()
+        {
+            Core.Instance.Start();
+        }
+
         public override void Shutdown()
         {
             Core.Instance.Shutdown();
         }
 
-        public override void Load( KeyValuesJson[] config)
-        {
-            var text = KeyValuesJson.Stringify(config);
+        //public override void Load( KeyValuesJson[] config)
+        //{
+        //    var text = KeyValuesJson.Stringify(config);
 
-            File.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "debug.json"), text);
-        }
+        //    File.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "debug.json"), text);
+        //}
 
         public void Load(Models.Load.Root config)
         {

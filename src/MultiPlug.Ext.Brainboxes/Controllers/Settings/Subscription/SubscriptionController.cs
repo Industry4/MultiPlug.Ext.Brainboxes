@@ -6,7 +6,7 @@ using MultiPlug.Ext.Brainboxes.Models.Components.Device;
 namespace MultiPlug.Ext.Brainboxes.Controllers.Settings.Subscription
 {
     [Route("subscription")]
-    class SubscriptionController : Controller
+    public class SubscriptionController : SettingsApp
     {
         public Response Get( string device, string output, string id )
         {
@@ -71,9 +71,9 @@ namespace MultiPlug.Ext.Brainboxes.Controllers.Settings.Subscription
                     OutputId = output,
                     SubscriptionGuid = id,
                     SubscriptionId = Subscription.Id,
-                    HighKey = Subscription.HighKey,
+                    HighKey = Subscription.HighSubject,
                     HighValue = Subscription.HighValue,
-                    LowKey = Subscription.LowKey,
+                    LowKey = Subscription.LowSubject,
                     LowValue = Subscription.LowValue
                 },
                 Template = "BrainboxesSubscription"

@@ -6,9 +6,9 @@ namespace MultiPlug.Ext.Brainboxes.Models.Components.Device
         public void Update(BBSubscriptionProperties theProperties)
         {
             IOLine = theProperties.IOLine;
-            HighKey = theProperties.HighKey;
+            HighSubject = theProperties.HighSubject;
             HighValue = theProperties.HighValue;
-            LowKey = theProperties.LowKey;
+            LowSubject = theProperties.LowSubject;
             LowValue = theProperties.LowValue;
         }
     }

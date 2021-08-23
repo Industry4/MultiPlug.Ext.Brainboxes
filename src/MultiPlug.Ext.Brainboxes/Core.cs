@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Threading;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
@@ -11,14 +13,14 @@ using MultiPlug.Ext.Brainboxes.Models.Components.Discovery;
 using MultiPlug.Ext.Brainboxes.Components.Defaults;
 using MultiPlug.Ext.Brainboxes.Models.Components.Device;
 using MultiPlug.Ext.Brainboxes.Models.Components.Defaults;
-using System.Threading.Tasks;
-using System.Threading;
+using MultiPlug.Base.Exchange.API;
 
 namespace MultiPlug.Ext.Brainboxes
 {
     public class Core : MultiPlugBase
     {
         private static Core m_Instance = null;
+        internal IMultiPlugServices MultiPlugServices { get; set; }
 
         public static Core Instance
         {
@@ -45,7 +47,6 @@ namespace MultiPlug.Ext.Brainboxes
         private void ConstructEvents()
         {
             var EventsList = new List<Event>();
-            EventsList.Add(Logging.Instance.Event);
             EventsList.Add(m_Devices.Event);
             Array.ForEach(Devices, Device => EventsList.AddRange(Device.Events));
             EventsList.Add(Discovery.Properties.StartDeviceDiscovery);
@@ -101,7 +102,7 @@ namespace MultiPlug.Ext.Brainboxes
         {
             List<Task> TaskList = new List<Task>();
 
-            Array.ForEach(Devices, d => TaskList.Add(d.Connect(TokenSource.Token)));
+            Array.ForEach(Devices, Device => TaskList.Add(Device.Connect(TokenSource.Token)));
 
             Task.WhenAll(TaskList).Wait(TokenSource.Token);
         }
@@ -150,12 +151,13 @@ namespace MultiPlug.Ext.Brainboxes
                             DeviceProperties.Guid = System.Guid.NewGuid().ToString();
                         }
 
-                        var NewDevice = new BBDevice(DeviceProperties.Guid);
+                        var Logger = MultiPlugServices.Logging.New(DeviceProperties.Guid, Diagnostics.EventLogDefinitions.DefinitionsId);
+                        var NewDevice = new BBDevice(DeviceProperties.Guid, Logger);
 
-                        NewDevice.DeviceException += OnDeviceException;
                         NewDevice.EventsUpdated += OnEventsUpdated;
                         NewDevice.SubscriptionsUpdated += OnSubscriptionsUpdated;
                         NewDevice.Update(DeviceProperties);
+                        NewDevice.DeviceInformationFetchError += OnDeviceInformationFetchError;
                         m_Devices.Add(NewDevice);
 
                         m_SubscriptionsUpdatedEventRaised = true;
@@ -175,6 +177,16 @@ namespace MultiPlug.Ext.Brainboxes
             {
                 OnEventsUpdated(this, EventArgs.Empty);
             }
+        }
+
+        internal void Start()
+        {
+            Array.ForEach(Devices, Device => Device.Start());
+        }
+
+        private void OnDeviceInformationFetchError()
+        {
+            Discovery.BeginSearch();
         }
 
         internal void Update(BBDefaultProperties theProperties)
@@ -230,7 +242,6 @@ namespace MultiPlug.Ext.Brainboxes
             else
             {
                 DeviceSearch.DeleteAndTidyUp();
-                DeviceSearch.DeviceException -= OnDeviceException;
                 DeviceSearch.EventsUpdated -= OnEventsUpdated;
                 DeviceSearch.SubscriptionsUpdated -= OnSubscriptionsUpdated;
                 m_Devices.Remove(DeviceSearch);
@@ -267,11 +278,6 @@ namespace MultiPlug.Ext.Brainboxes
             {
                 ConstructSubscriptions();
             }
-        }
-
-        void OnDeviceException(object sender, string e)
-        {
-            Logging.Instance.WriteLine(e);
         }
     }
 }

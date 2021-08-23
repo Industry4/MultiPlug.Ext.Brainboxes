@@ -1,7 +1,7 @@
 ﻿
 namespace MultiPlug.Ext.Brainboxes.Models.API
 {
-    class SetDeviceIO : DeviceIO
+    public class SetDeviceIO : DeviceIO
     {
     }
 }

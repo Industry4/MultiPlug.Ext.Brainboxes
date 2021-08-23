@@ -1,9 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.Serialization;
 
 using MultiPlug.Base.Exchange;
-using MultiPlug.Ext.Brainboxes.Models;
-using System.Linq;
 using MultiPlug.Ext.Brainboxes.Models.Components.Discovery;
 
 namespace MultiPlug.Ext.Brainboxes.Components.Discovery
@@ -18,8 +17,6 @@ namespace MultiPlug.Ext.Brainboxes.Components.Discovery
         [DataMember]
         public BBDiscoveryProperties Properties { get; internal set; } = new BBDiscoveryProperties();
 
-        //private FireHelper m_Fire = new FireHelper();
-
         public BBDiscovery()
         {
             Properties.DiscoverySubscription = new Subscription
@@ -28,14 +25,6 @@ namespace MultiPlug.Ext.Brainboxes.Components.Discovery
                 Guid = Guid.NewGuid().ToString(),
                 Id = ""
             };
-
-            //Properties.DiscoveryEvent = new Event
-            //{
-            //    Description = "UI Event: New Brainboxes Device Discovered.",
-            //    Guid = Guid.NewGuid().ToString(),
-            //    Id = Guid.NewGuid().ToString(),
-            //    Object = m_Fire
-            //};
 
             Properties.StartDeviceDiscovery = new EventExternal
             {
@@ -48,29 +37,13 @@ namespace MultiPlug.Ext.Brainboxes.Components.Discovery
         public BBDiscovery( BBDiscoveryProperties theModel)
         {
             Properties = theModel;
-
             Properties.DiscoverySubscription.EventConsumer = this;
-            //Properties.DiscoveryEvent.Object = m_Fire;
         }
 
         public void UpdateProperties( BBDiscoveryProperties theModel )
         {
             bool SubscriptionsChangedFlag = false;
             bool EventsChangedFlag = false;
-
-            //if( theModel.DiscoveryEvent != null)
-            //{
-            //    if( Properties.DiscoveryEvent.Id != theModel.DiscoveryEvent.Id)
-            //    {
-            //        EventsChangedFlag = true;
-            //        Properties.DiscoveryEvent.Id = theModel.DiscoveryEvent.Id;
-            //    }
-            //    if (Properties.DiscoveryEvent.Description != theModel.DiscoveryEvent.Description)
-            //    {
-            //        EventsChangedFlag = true;
-            //        Properties.DiscoveryEvent.Description = theModel.DiscoveryEvent.Description;
-            //    }
-            //}
 
             if( theModel.DiscoverySubscription != null)
             {
@@ -125,33 +98,9 @@ namespace MultiPlug.Ext.Brainboxes.Components.Discovery
             }
         }
 
-        //private class FireHelper : EventableBase
-        //{
-        //    public override event MPEventHandler Update;
-
-        //    public void Fire(string id, string guid, string ip)
-        //    {
-        //        Update?.Invoke(new Payload
-        //        (
-        //            id,
-        //            new Pair[]
-        //            {
-        //                new Pair( "guid", ip ),
-        //                new Pair( "ip", ip )
-        //                //new Pair {Type="name", Value = name },
-        //                //new Pair {Type="autoconnect", Value = autoconnect }
-        //            }
-        //        ));
-        //    }
-        //    public override Payload CachedValue()
-        //    {
-        //        throw new NotImplementedException();
-        //    }
-        //}
-
-        //internal void isNew(string IpAddress, string theGuid)
-        //{
-        //    m_Fire.Fire(Properties.DiscoveryEvent.Id, theGuid, IpAddress);
-        //}
+        internal void BeginSearch()
+        {
+            Properties.StartDeviceDiscovery.Fire(new Payload(Properties.StartDeviceDiscovery.Id));
+        }
     }
 }

@@ -12,7 +12,7 @@ using MultiPlug.Base.Exchange;
 namespace MultiPlug.Ext.Brainboxes.Controllers.Settings.Device
 {
     [Route("device")]
-    class DeviceController : Controller
+    public class DeviceController : SettingsApp
     {
         public Response Get(string id)
         {
@@ -51,7 +51,7 @@ namespace MultiPlug.Ext.Brainboxes.Controllers.Settings.Device
 
             List<Base.Exchange.Subscription> Subs = DeviceSearch.IOEvents.Select(e => new Base.Exchange.Subscription { Id = e.Id, Guid = Guid.NewGuid().ToString() }).ToList();
 
-            Subs.Add(new Base.Exchange.Subscription { Id = DeviceSearch.Logging.Event.Id, Guid = Guid.NewGuid().ToString() });
+            Subs.Add(new Base.Exchange.Subscription { Id = DeviceSearch.LogEventId, Guid = Guid.NewGuid().ToString() });
             Subs.Add(new Base.Exchange.Subscription { Id = DeviceSearch.Connection.Status.Event.Id, Guid = Guid.NewGuid().ToString() });
 
 
@@ -67,13 +67,13 @@ namespace MultiPlug.Ext.Brainboxes.Controllers.Settings.Device
                     Firmware = DeviceSearch.Firmware,
                     ProductModel = DeviceSearch.ProductModel,
                     Status = DeviceSearch.Status.ToString(),
-                    Log = DeviceSearch.Logging.LogRead(),
-                    LogEventId = DeviceSearch.Logging.Event.Id,
+                //    Log = DeviceSearch.Logging.LogRead(),
+                    LogEventId = DeviceSearch.LogEventId,
                     ConnectButtonText = ConnectButtonText,
                     ConnectButtonEventId = DeviceSearch.ConnectButtonEvent.Id,
                     RestartButtonEventId = DeviceSearch.RestartButtonEvent.Id,
                     DeviceStatusEventId = DeviceSearch.Connection.Status.Event.Id,
-                    Events = DeviceSearch.IOEvents.Select(Event => new ESViewModel { IOid = Event.IONumber.ToString() ,EventId = Event.Id, Guid = Event.Guid, Description = Event.Description, RisingEdge = Event.RisingEdgeValue, FallingEdge = Event.FallingEdgeValue, CachedValue = Event.Object.CachedValue() }).ToArray(),
+                    Events = DeviceSearch.IOEvents.Select(Event => new ESViewModel { IOid = Event.IONumber.ToString() ,EventId = Event.Id, Guid = Event.Guid, Description = Event.Description, RisingEdge = Event.RisingEdgeValue, FallingEdge = Event.FallingEdgeValue, CachedValue = Event.CachedPayload() }).ToArray(),
                     Outputs = DeviceSearch.Outputs.Select(Output => new DeviceOutputViewModel { Name = Output.Name, Value = Output.Value, UIToggleEventID = Output.UIToggleEvent.Id, Subscriptions = Output.Subscriptions.Select(s => new ESViewModel { EventId = s.Id, Guid = s.Guid }).ToArray() }).ToArray()
                 },
                 Template = "BrainboxesDeviceView",

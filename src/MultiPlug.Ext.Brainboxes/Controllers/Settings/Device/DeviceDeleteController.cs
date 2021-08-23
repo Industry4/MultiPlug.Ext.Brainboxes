@@ -4,7 +4,7 @@ using MultiPlug.Base.Http;
 namespace MultiPlug.Ext.Brainboxes.Controllers.Settings.Device
 {
     [Route("device/delete")]
-    class DeviceDeleteController : Controller
+    public class DeviceDeleteController : SettingsApp
     {
         public Response Post(string id)
         {

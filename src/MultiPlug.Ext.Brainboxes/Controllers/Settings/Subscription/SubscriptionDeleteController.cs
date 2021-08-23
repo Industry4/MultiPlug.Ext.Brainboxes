@@ -4,7 +4,7 @@ using MultiPlug.Base.Http;
 namespace MultiPlug.Ext.Brainboxes.Controllers.Settings.Subscription
 {
     [Route("subscription/delete")]
-    class SubscriptionDeleteController : Controller
+    public class SubscriptionDeleteController : SettingsApp
     {
         public Response Get(string device, string output, string id)
         {

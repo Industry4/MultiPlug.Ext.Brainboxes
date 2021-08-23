@@ -4,15 +4,17 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Threading;
 using MultiPlug.Ext.Brainboxes.Models.Components.Device;
+using MultiPlug.Ext.Brainboxes.Diagnostics;
 
 namespace MultiPlug.Ext.Brainboxes.Components.Device
 {
-    public class BBDeviceInformation
+    internal class BBDeviceInformation
     {
         private CancellationTokenSource m_TokenSource = new CancellationTokenSource();
 
-        public event EventHandler<DeviceInformation> FetchCompleted;
-        public event EventHandler<string> Log;
+        internal event Action<DeviceInformation> FetchCompleted;
+        internal event Action<EventLogEntryCodes, string[]> Log;
+        internal event Action FetchError;
 
         private Task m_Task;
 
@@ -57,18 +59,21 @@ namespace MultiPlug.Ext.Brainboxes.Components.Device
                 }
                 catch (Exception ex)
                 {
-                    Log?.Invoke(this, "Exception from device with IP [" + theIPAddress + "] fetching Device Information over http. " + ex.Message);
-                    Task.Delay(2000).Wait();
+                    Log?.Invoke(EventLogEntryCodes.FetchException, new string[] { theIPAddress, ex.Message });
+                    FetchError?.Invoke();
+                    Task.Delay(3000).Wait();
                 }
 
             } while (xmlStr == string.Empty && (!m_TokenSource.Token.IsCancellationRequested));
 
-            if(m_TokenSource.Token.IsCancellationRequested)
+            if (m_TokenSource.Token.IsCancellationRequested)
             {
                 return;
             }
             else
             {
+                Log?.Invoke(EventLogEntryCodes.FetchSuccessful, new string[] { theIPAddress });
+
                 var xmlDoc = new XmlDocument();
                 xmlDoc.LoadXml(xmlStr);
 
@@ -78,7 +83,7 @@ namespace MultiPlug.Ext.Brainboxes.Components.Device
                 XmlNode ModelNode = xmlDoc.DocumentElement.SelectSingleNode("/lines/model");
                 XmlNode DevNameNode = xmlDoc.DocumentElement.SelectSingleNode("/lines/devname");
 
-                 FetchCompleted?.Invoke(this, new DeviceInformation
+                 FetchCompleted?.Invoke(new DeviceInformation
                 {
                     MACAddress = MACNode.InnerText,
                     Name = DevNameNode.InnerText,
@@ -88,7 +93,5 @@ namespace MultiPlug.Ext.Brainboxes.Components.Device
                 });
             }
         }
-
-
     }
 }

@@ -2,18 +2,19 @@
 <package >
   <metadata>
     <id>MultiPlug.Ext.Brainboxes</id>
-    <version>1.0.14</version>
-    <title>$title$</title>
+    <version>1.0.15</version>
+    <title>Brainboxes Extension for MultiPlug</title>
     <authors>4IR.UK</authors>
     <owners>4IR.UK</owners>
     <projectUrl>https://github.com/Industry4/MultiPlug.Ext.Brainboxes</projectUrl>
-    <iconUrl>https://raw.githubusercontent.com/Industry4/MultiPlug.Ext.Brainboxes/master/media/multiplug.ico</iconUrl>
+    <icon>images\multiplugico.png</icon>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Brainboxes Extension for MultiPlug</description>
+    <description>Brainboxes Extension for the MultiPlug Edge Computing Platform (https://www.multiplug.app)</description>
     <releaseNotes>Application Use:
 * Connect to Brainboxes Ltd digital Input and Output hardware - For the full product range view http://www.brainboxes.com/remote-io
 
 Change Log:
+1.0.15 Not Stable. Pre 1.0.16
 1.0.14 Applied new Base classes
 1.0.13 Applied new Base classes
 1.0.12 Enhancement: Complete refresh of the User Interface
@@ -27,10 +28,20 @@ Bug: Device settings were being lost on startup.
 
 Brainboxes is a trademark of Brainboxes Ltd
 </releaseNotes>
-    <copyright>4IR.UK 2018 (Brainboxes is a trademark of Brainboxes Ltd)</copyright>
+    <copyright>4IR.UK 2021 (Brainboxes is a trademark of Brainboxes Ltd)</copyright>
     <tags>Brainboxes IOT INDUSTRY_4.0 INDUSTRY 4.0 4IR M2M Edge_Computing</tags>
     <dependencies>
-      <dependency id="MultiPlug.Core" version="2.2.60" />
+      <group targetFramework=".NETFramework4.7.2">
+        <dependency id="MultiPlug.Base" version="1.0.62" />
+        <dependency id="MultiPlug.Extension.Core" version="1.0.62" />
+        <dependency id="MultiPlug.Core" version="2.2.75" />
+      </group>
     </dependencies>
   </metadata>
+  
+  <files>
+    <file src="images\multiplugico.png" target="images\" />
+    <file src="..\..\src\MultiPlug.Ext.Brainboxes\bin\Release\MultiPlug.Ext.Brainboxes.dll" target="lib\net472" />
+  </files>
+  
 </package>

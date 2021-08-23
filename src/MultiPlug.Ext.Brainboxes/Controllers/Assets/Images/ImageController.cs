@@ -6,7 +6,7 @@ using MultiPlug.Ext.Brainboxes.Properties;
 namespace MultiPlug.Ext.Brainboxes.Controllers.Assets.Images
 {
     [Route("images/*")]
-    class ImageController : Controller
+    public class ImageController : AssetsEndpoint
     {
         public Response Get(string theName)
         {

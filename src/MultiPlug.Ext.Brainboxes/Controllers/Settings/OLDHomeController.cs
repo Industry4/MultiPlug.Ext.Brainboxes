@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 using MultiPlug.Base.Attribute;
 using MultiPlug.Base.Http;
 using MultiPlug.Ext.Brainboxes.Models;
-using MultiPlug.Ext.Brainboxes.Models.Settings;
 using MultiPlug.Ext.Brainboxes.Models.Settings.Device;
 
 namespace MultiPlug.Ext.Brainboxes.Controllers.Settings.Home
 {
     [Route("oldhome")]
-    class OLDHomeController : Controller
+    public class OLDHomeController : SettingsApp
     {
         public Response Get()
         {
@@ -40,8 +38,8 @@ namespace MultiPlug.Ext.Brainboxes.Controllers.Settings.Home
                 Model = new SettingsViewModel
                 {
                     Devices = devicesview,
-                    Log = Logging.Instance.ToString(),
-                    LogEventId = Logging.Instance.Event.Id,
+                //    Log = Logging.Instance.ToString(),
+               //     LogEventId = Logging.Instance.Event.Id,
                     DiscoverDeviceId = Core.Instance.Discovery.Properties.StartDeviceDiscovery.Id,
                   //  DeviceDiscoveredId = Core.Instance.Discovery.Properties.DiscoveryEvent.Id
                 },
@@ -51,7 +49,7 @@ namespace MultiPlug.Ext.Brainboxes.Controllers.Settings.Home
                 Subscriptions = new Base.Exchange.Subscription[]
                 {
             //        new Base.Exchange.Subscription { Id = Core.Instance.Discovery.Properties.DiscoveryEvent.Id, Guid = Guid.NewGuid().ToString() },
-                    new Base.Exchange.Subscription { Id = Logging.Instance.Event.Id, Guid = Guid.NewGuid().ToString() }
+               //     new Base.Exchange.Subscription { Id = Logging.Instance.Event.Id, Guid = Guid.NewGuid().ToString() }
                 }
             };
         }

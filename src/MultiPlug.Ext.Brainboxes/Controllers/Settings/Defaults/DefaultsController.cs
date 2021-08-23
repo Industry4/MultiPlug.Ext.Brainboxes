@@ -6,7 +6,7 @@ using MultiPlug.Ext.Brainboxes.Models.Settings.Defaults;
 namespace MultiPlug.Ext.Brainboxes.Controllers.Settings.Defaults
 {
     [Route("defaults")]
-    class DefaultsController : Controller
+    public class DefaultsController : SettingsApp
     {
         public Response Get()
         {

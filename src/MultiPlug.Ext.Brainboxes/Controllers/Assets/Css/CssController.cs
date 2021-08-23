@@ -6,7 +6,7 @@ using MultiPlug.Ext.Brainboxes.Properties;
 namespace MultiPlug.Ext.Brainboxes.Controllers.Assets.Css
 {
     [Route("css/*")]
-    class CssController : Controller
+    class CssController : AssetsEndpoint
     {
         public Response Get(string theName)
         {

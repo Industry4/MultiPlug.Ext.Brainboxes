@@ -19,7 +19,7 @@ function ApplyDeleteButton() {
 
         })
         .done(function () {
-            //theRow.remove();
+            theRow.remove();
         });
     });
 }
@@ -36,11 +36,11 @@ function NewDevice() {
 
 function NewDeviceLoading(Guid, IPAddress, Name, Location, Status) {
     return '<tr>\
-                <td class="span3"><a href="extensions/brainboxes/device/?id=' + Guid + '">' + IPAddress + '</a></td>\
-                <td class="span3"><a href="extensions/brainboxes/device/?id=' + Guid + '">' + Name + '</a></td>\
-                <td class="span3"><a href="extensions/brainboxes/device/?id=' + Guid + '">' + Location + '</a></td>\
-                <td class="span2"><a href="extensions/brainboxes/device/?id=' + Guid + '">' + Status + '</a></td>\
-                <td class="span1"><a class="btn btn-red btn-deletedevice" href="extensions/brainboxes/device/delete/?id=' + Guid + '"><i class="icon-trash"></i></a></td>\
+                <td class="span3"><a href="extensions/multiplug.ext.brainboxes/device/?id=' + Guid + '">' + IPAddress + '</a></td>\
+                <td class="span3"><a href="extensions/multiplug.ext.brainboxes/device/?id=' + Guid + '">' + Name + '</a></td>\
+                <td class="span3"><a href="extensions/multiplug.ext.brainboxes/device/?id=' + Guid + '">' + Location + '</a></td>\
+                <td class="span2"><a href="extensions/multiplug.ext.brainboxes/device/?id=' + Guid + '">' + Status + '</a></td>\
+                <td class="span1"><a class="btn btn-red btn-deletedevice" href="extensions/multiplug.ext.brainboxes/device/delete/?id=' + Guid + '"><i class="icon-trash"></i></a></td>\
             </tr>'
 }
 

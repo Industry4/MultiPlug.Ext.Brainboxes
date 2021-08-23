@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("MultiPlug Brainboxes Extension")]
 [assembly: AssemblyDescription("Connect to Brainboxes Ltd I/O hardware")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("4IR.UK")]
+[assembly: AssemblyCompany("4IR.UK British Systems")]
 [assembly: AssemblyProduct("Brainboxes")]
-[assembly: AssemblyCopyright("4IR.UK 2019")]
+[assembly: AssemblyCopyright("4IR.UK British Systems 2021")]
 [assembly: AssemblyTrademark("Brainboxes is a trademark of Brainboxes Ltd")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.14.0")]
-[assembly: AssemblyFileVersion("1.0.14.0")]
+[assembly: AssemblyVersion("1.0.15.0")]
+[assembly: AssemblyFileVersion("1.0.15.0")]

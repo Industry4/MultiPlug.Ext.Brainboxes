@@ -80,7 +80,14 @@ namespace MultiPlug.Ext.Brainboxes.Components.Device
                 }
                 else
                 {
-                    return m_Line.Value;
+                    try
+                    {
+                        return m_Line.Value;
+                    }
+                    catch(System.IO.InvalidDataException)
+                    {
+                        return -1;
+                    }
                 }
             }
             set
@@ -123,9 +130,9 @@ namespace MultiPlug.Ext.Brainboxes.Components.Device
             return new BBSubscriptionProperties
             {
                 IOLine = m_Line,
-                HighKey = "value",
+                HighSubject = "value",
                 HighValue = "1",
-                LowKey = "value",
+                LowSubject = "value",
                 LowValue = "0"
             };
         }

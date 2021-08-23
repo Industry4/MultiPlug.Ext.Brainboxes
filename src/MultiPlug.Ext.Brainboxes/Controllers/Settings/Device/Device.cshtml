@@ -1,14 +1,14 @@
-﻿@model MultiPlug.Ext.Brainboxes.Models.Settings.Device.Device
+﻿@model MultiPlug.Base.Http.EdgeApp
 
 @functions{ 
 
-    public string ColourState( MultiPlug.Base.Exchange.Payload thePayload )
+    public string ColourState( MultiPlug.Base.Exchange.Payload thePayload, string HighValue, string LowValue )
     {
         string Result = "IOStateUnknown";
 
         if (thePayload.Pairs.Length > 0)
         {
-            Result = thePayload.Pairs[0].Value == "1" ? "IOStateGreen" : "IOStateRed";
+            Result = thePayload.Pairs[0].Value == HighValue ? "IOStateGreen" : "IOStateRed";
         }
 
         return Result;
@@ -21,19 +21,19 @@
 }
 
 <form action="" method="post" accept-charset="utf-8" enctype="application/x-www-form-urlencoded">
-    <input type="hidden" name="Guid" value="@Model.Guid" />
+    <input type="hidden" name="Guid" value="@Model.Extension.Model.Guid" />
     <section class="row-fluid">
 
         <div class="row-fluid">
             <div class="box">
                 <div class="span4">
-                    <a style="line-height: 52px;" href="#"><img alt="Brainboxes Logo" src="assets/brainboxes/images/brainboxes.png"></a>
+                    <a style="line-height: 52px;" href="#"><img alt="Brainboxes Logo" src="@Raw(Model.Context.Paths.Assets)images/brainboxes.png"></a>
                 </div>
                 <div class="span4">
                     <p style="font-size:26px; line-height: 54px; text-align: center; margin: 0px;">Device Setup</p>
                 </div>
                 <div class="span4" style="text-align: right;">
-                    <a class="btn btn-black" style="height:44px; width:35px" href="extensions/brainboxes/"><i class="icon-arrow-left icon-large"></i><p>Back</p></a>
+                    <a class="btn btn-black" style="height:44px; width:35px" href="@Raw(Model.Context.Paths.Home)"><i class="icon-arrow-left icon-large"></i><p>Back</p></a>
                     <button type="submit" value="submit" style="height:54px; width:65px" class="item btn btn-green"><i class="icon-save icon-large"></i><p>Save</p></button>
                 </div>
             </div>
@@ -47,7 +47,7 @@
                         <div class="row-fluid"><div class="span12"><h5>IP Address</h5></div></div>
                         <div class="row-fluid">
                             <div class="span12">
-                                <input name="IPAddress" class="input-block-level" type="text" value="@Model.IPAddress" />
+                                <input name="IPAddress" class="input-block-level" type="text" value="@Model.Extension.Model.IPAddress" />
                             </div>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                         <div class="row-fluid"><div class="span12"><h5>Name</h5></div></div>
                         <div class="row-fluid">
                             <div class="span12">
-                                <input name="Name" class="input-block-level" type="text" value="@Model.Name" />
+                                <input name="Name" class="input-block-level" type="text" value="@Model.Extension.Model.Name" />
                             </div>
                         </div>
                     </div>
@@ -70,22 +70,22 @@
 
                     <div class="span3">
                         <h5>Model</h5>
-                        <p>@Model.ProductModel</p>
+                        <p>@Model.Extension.Model.ProductModel</p>
                     </div>
 
                     <div class="span3">
                         <h5>MAC</h5>
-                        <p>@Model.MACAddress</p>
+                        <p>@Model.Extension.Model.MACAddress</p>
                     </div>
 
                     <div class="span3">
                         <h5>Firmware</h5>
-                        <p>@Model.Firmware</p>
+                        <p>@Model.Extension.Model.Firmware</p>
                     </div>
 
                     <div class="span3">
                         <h5>Location</h5>
-                        <p>@Model.Location</p>
+                        <p>@Model.Extension.Model.Location</p>
                     </div>
                 </div>
             </div>
@@ -102,11 +102,11 @@
                         <div class="row-fluid">
 
                             <div class="btn-group btn-group-vertical">
-                                <button type="button" id="devicestatus" class="btn btn-black span12 disabled">@Model.Status</button>
+                                <button type="button" id="devicestatus" class="btn btn-black span12 disabled">@Model.Extension.Model.Status</button>
                                 <a class="btn span12 btn-red" id="connectbtn" href="#" >
-                                    <i class="icon-exchange"></i> <span id="connectbtntext">@Model.ConnectButtonText</span>
+                                    <i class="icon-exchange"></i> <span id="connectbtntext">@Model.Extension.Model.ConnectButtonText</span>
                                 </a>
-                                <a class="btn btn-blue span12" href="http://@Model.IPAddress" target="_blank">
+                                <a class="btn btn-blue span12" href="http://@Model.Extension.Model.IPAddress" target="_blank">
                                     <i class="icon-external-link"></i> Manage
                                 </a>
                                 <a class="btn btn-red span12" id="restartbtn" href="#">
@@ -118,7 +118,7 @@
 
                     <div class="span10">
                         <h5>Trace Log</h5>
-                        <textarea id="textarea-log" rows="5" class="span12">@Model.Log</textarea>
+                        <textarea id="textarea-log" rows="5" class="span12">@*@Model.Extension.Model.Log*@</textarea>
                     </div>
 
                 </div>
@@ -140,10 +140,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var Event in @Model.Events)
+                        @foreach (var Event in @Model.Extension.Model.Events)
                         {
                             <tr>              
-                                <td class="span1"><input type="hidden" name="IONumber" value="@Event.IOid"><p id ="IOStateColour-@Event.EventId" class="IOState @ColourState( Event.CachedValue )">@Event.IOid</p></td>
+                                <td class="span1"><input type="hidden" name="IONumber" value="@Event.IOid"><p id ="IOStateColour-@Event.EventId" class="IOState @ColourState( Event.CachedValue, Event.RisingEdge, Event.FallingEdge )">@Event.IOid</p></td>
                                 <td class="span3"><input name="EventId" class="input-block-level" type="text" placeholder="Event ID" value="@Event.EventId"></td>
                                 <td class="span4"><input name="EventDescription" class="input-block-level" type="text" placeholder="Event Description" value="@Event.Description"></td>
                                 <td class="span1"><input name="High" class="input-block-level" type="text" value="@Event.RisingEdge"></td>
@@ -159,7 +159,7 @@
             <h3 class="box-header">Subscriptions ( Outputs )</h3>
             <div class="box non-collapsible">
                 <div class="accordion" id="accordion">
-                    @foreach (var Output in @Model.Outputs)
+                    @foreach (var Output in @Model.Extension.Model.Outputs)
                     {
                         <div class="accordion-group">
                             <div class="accordion-heading">
@@ -192,9 +192,9 @@
                                             @foreach (var Subscription in Output.Subscriptions)
                                             {
                                                 <tr>
-                                                    <td><a href="extensions/brainboxes/subscription/?device=@Model.Guid&output=@Output.Name&id=@Subscription.Guid">@Subscription.EventId</a></td>
+                                                    <td><a href="extensions/brainboxes/subscription/?device=@Model.Extension.Model.Guid&output=@Output.Name&id=@Subscription.Guid">@Subscription.EventId</a></td>
                                                     <td>
-                                                        <a class="btn btn-red delete-channel" href="extensions/brainboxes/subscription/delete/?device=@Model.Guid&output=@Output.Name&id=@Subscription.Guid"><i class="icon-trash"></i></a>
+                                                        <a class="btn btn-red delete-channel" href="extensions/brainboxes/subscription/delete/?device=@Model.Extension.Model.Guid&output=@Output.Name&id=@Subscription.Guid"><i class="icon-trash"></i></a>
                                                     </td>
                                                 </tr>
                                             }
@@ -202,7 +202,7 @@
                                     </table>
                                     <div class="row-fluid">
                                         <div class="span12">
-                                            <a class="btn btn-green" href="extensions/brainboxes/subscription/?device=@Model.Guid&output=@Output.Name&id=new"><i class="icon-plus-sign"></i></a>
+                                            <a class="btn btn-green" href="extensions/brainboxes/subscription/?device=@Model.Extension.Model.Guid&output=@Output.Name&id=new"><i class="icon-plus-sign"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -215,12 +215,12 @@
     </section>
 
     <script>
-        var DeviceId = "@Model.Guid";
-        var ConnectButtonEventId = "@Model.ConnectButtonEventId";
-        var RestartButtonEventId = "@Model.RestartButtonEventId";
-        var LogEventId = "@Model.LogEventId";
-        var DeviceStatusEventId = "@Model.DeviceStatusEventId"
+        var DeviceId = "@Model.Extension.Model.Guid";
+        var ConnectButtonEventId = "@Model.Extension.Model.ConnectButtonEventId";
+        var RestartButtonEventId = "@Model.Extension.Model.RestartButtonEventId";
+        var LogEventId = "@Model.Extension.Model.LogEventId";
+        var DeviceStatusEventId = "@Model.Extension.Model.DeviceStatusEventId"
     </script>
 
-    <script type="text/javascript" src="assets/brainboxes/js/device.js"></script>
+    <script type="text/javascript" src="@Raw(Model.Context.Paths.Assets)js/device.js"></script>
 </form>

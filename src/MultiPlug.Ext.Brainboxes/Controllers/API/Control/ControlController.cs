@@ -1,15 +1,15 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Text;
 using MultiPlug.Base.Attribute;
 using MultiPlug.Base.Exchange;
 using MultiPlug.Base.Http;
 using MultiPlug.Ext.Brainboxes.Models.API;
-using System;
 
 namespace MultiPlug.Ext.Brainboxes.Controllers.API.Control
 {
     [Route("control/*")]
-    class ControlController : Controller
+    public class ControlController : APIEndpoint
     {
         public Response Get(GetDeviceIO theModel)
         {

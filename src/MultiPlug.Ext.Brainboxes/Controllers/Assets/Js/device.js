@@ -13,19 +13,19 @@ $('#restartbtn').on('click', function (event) {
 
 $('.ToggleOutput').change(function () {
 
-    var pair = { "Type": "value", "Value": "0" };
+    var pair = { "Subject": "value", "Value": "0" };
 
     if (this.checked) {
-        pair = { "Type": "value", "Value": "1" };
+        pair = { "Subject": "value", "Value": "1" };
     }
 
-    var Group = { "Id": this.id, "Pairs": [pair] };
+    var Group = { "Id": this.id, "Subjects": [pair] };
     $.connection.wS.server.send(Group);
 });
 
 function ApplyHttpToggle() {
     $('.HttpToggleOutput').change(function () {
-        $.post("api/brainboxes/control/" + DeviceId , { "Id": DeviceId, "Io": this.id.replace("HttpToggleOutput", ""), "State": (this.checked)? "1" : "0" });
+        $.post("api/multiplug.ext.brainboxes/control/" + DeviceId, { "Id": DeviceId, "Io": this.id.replace("HttpToggleOutput", ""), "State": (this.checked) ? "1" : "0" });
     });
 }
 
@@ -46,9 +46,9 @@ function NewSubscriptions(DeviceGuid, Name, Subscriptions)
     var i;
     for (i = 0; i < Subscriptions.length; i++) {
         SubscriptionsHtml += '<tr>\
-    <td><a href="extensions/brainboxes/subscription/?device=' + DeviceGuid + '&output=' + Name + '&id=' + Subscriptions[i].Guid + '">' + Subscriptions[i].EventId + '</a></td>\
+    <td><a href="extensions/multiplug.ext.brainboxes/subscription/?device=' + DeviceGuid + '&output=' + Name + '&id=' + Subscriptions[i].Guid + '">' + Subscriptions[i].EventId + '</a></td>\
         <td>\
-            <a class="btn btn-red delete-channel" href="extensions/brainboxes/subscription/delete/?device=' + DeviceGuid + '&output=' + Name + '&id=' + Subscriptions[i].Guid + '"><i class="icon-trash"></i></a>\
+            <a class="btn btn-red delete-channel" href="extensions/multiplug.ext.brainboxes/subscription/delete/?device=' + DeviceGuid + '&output=' + Name + '&id=' + Subscriptions[i].Guid + '"><i class="icon-trash"></i></a>\
         </td>\
     </tr>'
     }
@@ -87,7 +87,7 @@ function NewOutput(Guid, Name, Subscriptions) {
             </table>\
             <div class="row-fluid">\
                 <div class="span12">\
-                    <a class="btn btn-green" href="extensions/brainboxes/subscription/?device=' + Guid + '&output=' + Name + '&id=new"><i class="icon-plus-sign"></i></a>\
+                    <a class="btn btn-green" href="extensions/multiplug.ext.brainboxes/subscription/?device=' + Guid + '&output=' + Name + '&id=new"><i class="icon-plus-sign"></i></a>\
                 </div>\
             </div>\
         </div>\
@@ -99,7 +99,7 @@ $.connection.wS.on("Send", function (id, Group) {
 
     if (id == LogEventId) {
         var parmfile = $('#textarea-log');
-        parmfile.text(parmfile.text() + Group.Pairs[0].Value + "\n");
+        parmfile.text(parmfile.text() + Group.Pairs[1].Value + "\n");
 
        // if (parmfile.length)
             parmfile.scrollTop(parmfile[0].scrollHeight);

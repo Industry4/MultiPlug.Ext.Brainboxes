@@ -1,5 +1,4 @@
 ﻿using System;
-
 using MultiPlug.Base.Attribute;
 using MultiPlug.Base.Http;
 using MultiPlug.Ext.Brainboxes.Models.Settings.Discovery;
@@ -8,7 +7,7 @@ using MultiPlug.Ext.Brainboxes.Models.Components.Discovery;
 namespace MultiPlug.Ext.Brainboxes.Controllers.Settings
 {
     [Route("Discovery")]
-    class DiscoveryController : Controller
+    public class DiscoveryController : SettingsApp
     {
         public Response Get()
         {

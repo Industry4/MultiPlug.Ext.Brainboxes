@@ -6,13 +6,14 @@ using Brainboxes.IO;
 using MultiPlug.Base.Exchange;
 using MultiPlug.Ext.Brainboxes.Models;
 using MultiPlug.Ext.Brainboxes.Models.Components.Device;
+using MultiPlug.Ext.Brainboxes.Diagnostics;
 
 namespace MultiPlug.Ext.Brainboxes.Components.Device
 {
     public class BBDeviceConnect : EventConsumer
     {
-        public event EventHandler<string> Log;
-        public event EventHandler Connected;
+        internal event Action<EventLogEntryCodes, string[]> Log;
+        internal event Action Connected;
 
         private Task m_Task;
 
@@ -79,7 +80,7 @@ namespace MultiPlug.Ext.Brainboxes.Components.Device
                 {
                     if( d.IsFaulted && m_RetryOnFail )
                     {
-                        ConnectTask();
+                        Task.Delay(2000).ContinueWith(t => ConnectTask());
                     }
                 });
             }
@@ -89,11 +90,11 @@ namespace MultiPlug.Ext.Brainboxes.Components.Device
         {
             if (string.IsNullOrEmpty(m_Properties.IP))
             {
-                Log?.Invoke(this, "Tried to connect but no IP set.");
+                Log?.Invoke(EventLogEntryCodes.NoIPSet, null);
                 return;
             }
 
-            Log?.Invoke(this, "Connecting device with IP [" + m_Properties.IP + "]");
+            Log?.Invoke( EventLogEntryCodes.Connecting, new string[] { m_Properties.IP } );
             Status.Status = StatusEnum.Connecting;
 
             try
@@ -103,8 +104,7 @@ namespace MultiPlug.Ext.Brainboxes.Components.Device
                     m_Properties.EDDevice = EDDevice.Create(m_Properties.IP);
                     m_Properties.EDDevice.DeviceStatusChangedEvent += DeviceStatusChanged;
                 }
-
-                Log?.Invoke(this, "Connected to device: [" + m_Properties.EDDevice.Describe() + "] at IP [" + m_Properties.IP + "]");
+                Log?.Invoke(EventLogEntryCodes.Connected, new string[] { m_Properties.EDDevice.Describe(), m_Properties.IP });
             }
             catch(System.Net.WebException ex)
             {
@@ -112,7 +112,7 @@ namespace MultiPlug.Ext.Brainboxes.Components.Device
 
                 Status.Status = StatusEnum.Errored;
 
-                Log?.Invoke(this, "Exception from device with IP [" + m_Properties.IP + "] From [EDDevice.Create] Exception: " + ex.Message);
+                Log?.Invoke(EventLogEntryCodes.ConnectionException, new string[] { m_Properties.IP, ex.Message } );
                 throw (ex);
             }
             catch (Exception ex)
@@ -121,7 +121,7 @@ namespace MultiPlug.Ext.Brainboxes.Components.Device
 
                 Status.Status = StatusEnum.Errored;
 
-                Log?.Invoke(this, "Exception from device with IP [" + m_Properties.IP + "] From [EDDevice.Create] Exception: " + ex.Message);
+                Log?.Invoke(EventLogEntryCodes.ConnectionException, new string[] { m_Properties.IP, ex.Message });
                 throw (ex);
             }
 
@@ -140,34 +140,36 @@ namespace MultiPlug.Ext.Brainboxes.Components.Device
             foreach (var InputIO in m_Properties.EDDevice.Inputs)
             {
                 BBDeviceEvent FoundEvent = m_Properties.IOEvents.FirstOrDefault(e => e.IONumber == InputIO.IONumber);
-                BBEventFire EventFire = null;
+              //  BBEventFire EventFire = null;
 
                 if (FoundEvent == null)
                 {
                     string NewGuid = System.Guid.NewGuid().ToString();
 
-                    var NewEvent = new BBDeviceEvent
+                    FoundEvent = new BBDeviceEvent
                     {
                         Guid = NewGuid,
                         Id = NewGuid,
                         IONumber = InputIO.IONumber,
                         Description = "Device [" + m_Properties.MACAddress + "] I/O [" + InputIO.IONumber.ToString() + "]",
-                        Keys = new string[] { Core.Instance.Defaults.Key },
+                        Subjects = new string[] { Core.Instance.Defaults.Key },
                         RisingEdgeValue = Core.Instance.Defaults.RisingEdge,
                         FallingEdgeValue = Core.Instance.Defaults.FallingEdge
                     };
 
-                    EventFire = new BBEventFire(NewEvent.Guid, NewEvent.Keys[0], NewEvent.RisingEdgeValue, NewEvent.FallingEdgeValue);
-                    NewEvent.Object = EventFire;
-                    NewEvents.Add(NewEvent);
+                   // EventFire = new BBEventFire(NewEvent.Guid, NewEvent.Keys[0], NewEvent.RisingEdgeValue, NewEvent.FallingEdgeValue);
+                //    NewEvent.Object = EventFire;
+                    NewEvents.Add(FoundEvent);
                 }
                 else
                 {
-                    EventFire = FoundEvent.Object as BBEventFire;
+                 //   EventFire = FoundEvent.Object as BBEventFire;
                 }
 
-                InputIO.IOLineRisingEdge += EventFire.OnIOLineRisingEdgeChangedEvent;
-                InputIO.IOLineFallingEdge += EventFire.OnIOLineFallingEdgeChangedEvent;
+                InputIO.IOLineRisingEdge += FoundEvent.OnIOLineRisingEdgeChangedEvent;
+                InputIO.IOLineFallingEdge += FoundEvent.OnIOLineFallingEdgeChangedEvent;
+
+                FoundEvent.SetInit(InputIO.Value);
             }
 
             m_Properties.IOEvents = NewEvents.ToArray();
@@ -191,7 +193,7 @@ namespace MultiPlug.Ext.Brainboxes.Components.Device
             m_Properties.Outputs = NewOutputs.ToArray();
 
             Status.Status = StatusEnum.Connected;
-            Connected?.Invoke(this, EventArgs.Empty);
+            Connected?.Invoke();
         }
 
         public bool IsConnected
@@ -204,9 +206,14 @@ namespace MultiPlug.Ext.Brainboxes.Components.Device
 
         private void DeviceStatusChanged(IDevice<IConnection, IIOProtocol> device, string property, bool newValue)
         {
-            string NewV = (newValue) ? "Yes" : "No";
-
-            Log?.Invoke(this, "Device Status Changed: Property [" + property + "] Value [" + NewV + "]");
+            if(newValue)
+            {
+                Log?.Invoke(EventLogEntryCodes.PropertyChangedTrue, new string[] { property });
+            }
+            else
+            {
+                Log?.Invoke(EventLogEntryCodes.PropertyChangedFalse, new string[] { property });
+            }
 
             if( m_Properties.EDDevice == null && ( ! m_Properties.EDDevice.IsConnected ) )
             {

@@ -11,7 +11,7 @@ namespace MultiPlug.Ext.Brainboxes.Models.Settings.Device
         public string Name { get; set; }
         [DataMember]
         public string Status { get; set; }
-        public string Log { get; set; }
+     //   public string Log { get; set; }
         [DataMember]
         public string IPAddress { get; set; }
         [DataMember]
