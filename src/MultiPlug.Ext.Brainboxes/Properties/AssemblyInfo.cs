@@ -10,8 +10,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("4IR.UK British Systems")]
 [assembly: AssemblyProduct("Brainboxes")]
-[assembly: AssemblyCopyright("4IR.UK British Systems 2021")]
-[assembly: AssemblyTrademark("Brainboxes is a trademark of Brainboxes Ltd")]
+[assembly: AssemblyCopyright("4IR.UK British Systems 2026")]
+[assembly: AssemblyTrademark("Brainboxes is a trademark of Brainboxes Ltd. MultiPlug is a trademark of Great British Systems Ltd")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.15.0")]
-[assembly: AssemblyFileVersion("1.0.15.0")]
+[assembly: AssemblyVersion("1.0.16.0")]
+[assembly: AssemblyFileVersion("1.0.16.0")]

@@ -215,7 +215,7 @@ namespace MultiPlug.Ext.Brainboxes.Components.Device
                 Log?.Invoke(EventLogEntryCodes.PropertyChangedFalse, new string[] { property });
             }
 
-            if( m_Properties.EDDevice == null && ( ! m_Properties.EDDevice.IsConnected ) )
+            if( m_Properties.EDDevice == null || ( ! m_Properties.EDDevice.IsConnected ) )
             {
                 Status.Status = StatusEnum.Disconnected;
             }

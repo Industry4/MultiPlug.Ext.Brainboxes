@@ -23,7 +23,7 @@ namespace MultiPlug.Ext.Brainboxes.Controllers.Settings.Device
                 return new Response
                 {
                     Model = new NotFound(),
-                    Template = "BrainboxesDeviceNotFound"
+                    Template = Templates.SettingsDeviceNotFound
                 };
             }
 
@@ -67,7 +67,6 @@ namespace MultiPlug.Ext.Brainboxes.Controllers.Settings.Device
                     Firmware = DeviceSearch.Firmware,
                     ProductModel = DeviceSearch.ProductModel,
                     Status = DeviceSearch.Status.ToString(),
-                //    Log = DeviceSearch.Logging.LogRead(),
                     LogEventId = DeviceSearch.LogEventId,
                     ConnectButtonText = ConnectButtonText,
                     ConnectButtonEventId = DeviceSearch.ConnectButtonEvent.Id,
@@ -76,7 +75,7 @@ namespace MultiPlug.Ext.Brainboxes.Controllers.Settings.Device
                     Events = DeviceSearch.IOEvents.Select(Event => new ESViewModel { IOid = Event.IONumber.ToString() ,EventId = Event.Id, Guid = Event.Guid, Description = Event.Description, RisingEdge = Event.RisingEdgeValue, FallingEdge = Event.FallingEdgeValue, CachedValue = Event.CachedPayload() }).ToArray(),
                     Outputs = DeviceSearch.Outputs.Select(Output => new DeviceOutputViewModel { Name = Output.Name, Value = Output.Value, UIToggleEventID = Output.UIToggleEvent.Id, Subscriptions = Output.Subscriptions.Select(s => new ESViewModel { EventId = s.Id, Guid = s.Guid }).ToArray() }).ToArray()
                 },
-                Template = "BrainboxesDeviceView",
+                Template = Templates.SettingsDevice,
                 HeadMarkUp = "<link rel=\"stylesheet\" href=\"assets/brainboxes/css/toggleswitch.css\"> <link rel=\"stylesheet\" href=\"assets/brainboxes/css/IOStateColours.css\">",
                 Events = EventExternals.ToArray(),
                 Subscriptions = Subs.ToArray()

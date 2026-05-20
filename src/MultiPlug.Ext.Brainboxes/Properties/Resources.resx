@@ -133,9 +133,6 @@
   <data name="Device_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Controllers\Settings\Device\Device.cshtml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="OldSettings_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Controllers\Markup\OldSettings.cshtml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
   <data name="devices_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Controllers\Assets\js\devices.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
@@ -153,5 +150,11 @@
   </data>
   <data name="IOStateColours_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Controllers\Assets\Css\IOStateColours.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="SettingsNavigation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Controllers\Settings\SharedRazor\SettingsNavigation.cshtml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="SettingsAbout" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Controllers\Settings\About\SettingsAbout.cshtml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

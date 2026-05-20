@@ -19,7 +19,7 @@ namespace MultiPlug.Ext.Brainboxes.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -71,7 +71,7 @@ namespace MultiPlug.Ext.Brainboxes.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to @model MultiPlug.Ext.Brainboxes.Models.Settings.Defaults.DefaultsValues
+        ///   Looks up a localized string similar to @model MultiPlug.Base.Http.EdgeApp
         ///
         ///&lt;form action=&quot;&quot; method=&quot;post&quot; accept-charset=&quot;utf-8&quot; enctype=&quot;application/x-www-form-urlencoded&quot;&gt;
         ///    &lt;section class=&quot;row-fluid&quot;&gt;
@@ -79,10 +79,10 @@ namespace MultiPlug.Ext.Brainboxes.Properties {
         ///        &lt;div class=&quot;row-fluid&quot;&gt;
         ///            &lt;div class=&quot;box&quot;&gt;
         ///                &lt;div class=&quot;span4&quot;&gt;
-        ///                    &lt;a style=&quot;line-height: 52px;&quot; href=&quot;#&quot;&gt;&lt;img alt=&quot;Brainboxes Logo&quot; src=&quot;assets/brainboxes/images/brainboxes.png&quot;&gt;&lt;/a&gt;
+        ///                    &lt;a style=&quot;line-height: 52px;&quot; href=&quot;#&quot;&gt;&lt;img alt=&quot;Brainboxes Logo&quot; src=&quot;@Raw(Model.Context.Paths.Assets)images/brainboxes.png&quot;&gt;&lt;/a&gt;
         ///                &lt;/div&gt;
         ///                &lt;div class=&quot;span4&quot;&gt;
-        ///    [rest of string was truncated]&quot;;.
+        ///                    &lt;p sty [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Defaults_html {
             get {
@@ -91,30 +91,25 @@ namespace MultiPlug.Ext.Brainboxes.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to @model MultiPlug.Ext.Brainboxes.Models.Settings.Device.Device
+        ///   Looks up a localized string similar to @model MultiPlug.Base.Http.EdgeApp
         ///
         ///@functions{ 
         ///
-        ///    public string ColourState( MultiPlug.Base.Exchange.Payload thePayload )
+        ///    public string ColourState( MultiPlug.Base.Exchange.Payload thePayload, string HighValue, string LowValue )
         ///    {
         ///        string Result = &quot;IOStateUnknown&quot;;
         ///
         ///        if (thePayload.Pairs.Length &gt; 0)
         ///        {
-        ///            Result = thePayload.Pairs[0].Value == &quot;1&quot; ? &quot;IOStateGreen&quot; : &quot;IOStateRed&quot;;
+        ///            Result = thePayload.Pairs[0].Value == HighValue ? &quot;IOStateGreen&quot; : &quot;IOStateRed&quot;;
         ///        }
         ///
         ///        return Result;
         ///    }
-        ///}
         ///
-        ///&lt;style&gt;
-        ///
-        ///.IOState{
-        ///    padding-left: 5px;
-        ///    line-height: 30px;
-        ///    border-left-width: 6px;
-        ///    border-le [rest of string was truncated]&quot;;.
+        ///    public string isOutputChecked( int theValue)
+        ///    {
+        ///        return (theValue == 1) ? &quot;checked&quot; : [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Device_html {
             get {
@@ -138,10 +133,10 @@ namespace MultiPlug.Ext.Brainboxes.Properties {
         ///
         ///$(&apos;.ToggleOutput&apos;).change(function () {
         ///
-        ///    var pair = { &quot;Type&quot;: &quot;value&quot;, &quot;Value&quot;: &quot;0&quot; };
+        ///    var pair = { &quot;Subject&quot;: &quot;value&quot;, &quot;Value&quot;: &quot;0&quot; };
         ///
         ///    if (this.checked) {
-        ///        pair = { &quot;Typ [rest of string was truncated]&quot;;.
+        ///        pair = { &quot; [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string device_js {
             get {
@@ -150,19 +145,19 @@ namespace MultiPlug.Ext.Brainboxes.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to @model MultiPlug.Ext.Brainboxes.Models.Settings.Device.NotFound
+        ///   Looks up a localized string similar to @model MultiPlug.Base.Http.EdgeApp
         ///
         ///&lt;section class=&quot;row-fluid&quot;&gt;
         ///
         ///    &lt;div class=&quot;row-fluid&quot;&gt;
         ///        &lt;div class=&quot;box&quot;&gt;
         ///            &lt;div class=&quot;span4&quot;&gt;
-        ///                &lt;a style=&quot;line-height: 52px;&quot; href=&quot;#&quot;&gt;&lt;img alt=&quot;Brainboxes Logo&quot; src=&quot;assets/brainboxes/images/brainboxes.png&quot;&gt;&lt;/a&gt;
+        ///                &lt;a style=&quot;line-height: 52px;&quot; href=&quot;#&quot;&gt;&lt;img alt=&quot;Brainboxes Logo&quot; src=&quot;@Raw(Model.Context.Paths.Assets)images/brainboxes.png&quot;&gt;&lt;/a&gt;
         ///            &lt;/div&gt;
         ///            &lt;div class=&quot;span4&quot;&gt;
         ///                &lt;p style=&quot;font-size:26px; line-height: 54px; text-align: center; margin: 0px;&quot;&gt;Device Not Found&lt;/p&gt;
         ///            &lt;/div&gt;
-        ///  [rest of string was truncated]&quot;;.
+        ///            &lt;div [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string DeviceNotFound_html {
             get {
@@ -201,7 +196,7 @@ namespace MultiPlug.Ext.Brainboxes.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to @model MultiPlug.Ext.Brainboxes.Models.Settings.Discovery.DiscoveryViewModel
+        ///   Looks up a localized string similar to @model MultiPlug.Base.Http.EdgeApp
         ///
         ///&lt;form action=&quot;&quot; method=&quot;post&quot; accept-charset=&quot;utf-8&quot; enctype=&quot;application/x-www-form-urlencoded&quot;&gt;
         ///    &lt;section class=&quot;row-fluid&quot;&gt;
@@ -209,9 +204,10 @@ namespace MultiPlug.Ext.Brainboxes.Properties {
         ///        &lt;div class=&quot;row-fluid&quot;&gt;
         ///            &lt;div class=&quot;box&quot;&gt;
         ///                &lt;div class=&quot;span4&quot;&gt;
-        ///                    &lt;a style=&quot;line-height: 52px;&quot; href=&quot;#&quot;&gt;&lt;img alt=&quot;Brainboxes Logo&quot; src=&quot;assets/brainboxes/images/brainboxes.png&quot;&gt;&lt;/a&gt;
+        ///                    &lt;a style=&quot;line-height: 52px;&quot; href=&quot;#&quot;&gt;&lt;img alt=&quot;Brainboxes Logo&quot; src=&quot;@Raw(Model.Context.Paths.Assets)images/brainboxes.png&quot;&gt;&lt;/a&gt;
         ///                &lt;/div&gt;
-        ///                &lt;div class=&quot;span4&quot;&gt; [rest of string was truncated]&quot;;.
+        ///                &lt;div class=&quot;span4&quot;&gt;
+        ///                    &lt;p sty [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Discovery_html {
             get {
@@ -220,8 +216,20 @@ namespace MultiPlug.Ext.Brainboxes.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to body
-        ///{
+        ///   Looks up a localized string similar to .IOState{
+        ///    padding-left: 5px;
+        ///    line-height: 30px;
+        ///    border-left-width: 6px;
+        ///    border-left-style: solid;
+        ///    border-left-color: rgb(204, 204, 204);
+        ///    font-weight: bold;
+        ///}
+        /// 
+        ///.IOStateRed{
+        ///    border-left-color: red;
+        ///}
+        ///.IOStateGreen{
+        ///    border-left-color: green;
         ///}.
         /// </summary>
         internal static string IOStateColours_css {
@@ -231,32 +239,7 @@ namespace MultiPlug.Ext.Brainboxes.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to @model MultiPlug.Ext.Brainboxes.Models.SettingsViewModel
-        ///
-        ///&lt;div class=&quot;row-fluid&quot;&gt;
-        ///    &lt;div class=&quot;box&quot;&gt;
-        ///        &lt;div class=&quot;span5&quot;&gt;
-        ///            &lt;a href=&quot;/&quot;&gt;&lt;img alt=&quot;Brainboxes Logo&quot; src=&quot;assets/brainboxes/images/brainboxes.png&quot;&gt;&lt;/a&gt;
-        ///        &lt;/div&gt;
-        ///        &lt;div class=&quot;span2&quot;&gt;
-        ///        &lt;/div&gt;
-        ///        &lt;div class=&quot;span3&quot;&gt;
-        ///        &lt;/div&gt;
-        ///        &lt;div class=&quot;span2&quot;&gt;
-        ///        &lt;/div&gt;
-        ///    &lt;/div&gt;
-        ///&lt;/div&gt;
-        ///
-        ///&lt;form class=&quot;form-horizontal&quot; action=&quot;&quot; method=&quot;post&quot; accept-charset=&quot;utf-8&quot; enctype=&quot;application/x [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string OldSettings_html {
-            get {
-                return ResourceManager.GetString("OldSettings_html", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to @model MultiPlug.Ext.Brainboxes.Models.Settings.Home.Home
+        ///   Looks up a localized string similar to @model MultiPlug.Base.Http.EdgeApp
         ///
         ///&lt;form action=&quot;&quot; method=&quot;post&quot; accept-charset=&quot;utf-8&quot; enctype=&quot;application/x-www-form-urlencoded&quot;&gt;
         ///    &lt;section class=&quot;row-fluid&quot;&gt;
@@ -264,10 +247,10 @@ namespace MultiPlug.Ext.Brainboxes.Properties {
         ///        &lt;div class=&quot;row-fluid&quot;&gt;
         ///            &lt;div class=&quot;box&quot;&gt;
         ///                &lt;div class=&quot;span4&quot;&gt;
-        ///                    &lt;a style=&quot;line-height: 52px;&quot; href=&quot;#&quot;&gt;&lt;img alt=&quot;Brainboxes Logo&quot; src=&quot;assets/brainboxes/images/brainboxes.png&quot;&gt;&lt;/a&gt;
+        ///                    &lt;a style=&quot;line-height: 52px;&quot; href=&quot;#&quot;&gt;&lt;img alt=&quot;Brainboxes Logo&quot; src=&quot;@Raw(Model.Context.Paths.Assets)images/brainboxes.png&quot;&gt;&lt;/a&gt;
         ///                &lt;/div&gt;
         ///                &lt;div class=&quot;span4&quot;&gt;
-        ///                  [rest of string was truncated]&quot;;.
+        ///                    &lt;p sty [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Settings_html {
             get {
@@ -276,7 +259,55 @@ namespace MultiPlug.Ext.Brainboxes.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to @model MultiPlug.Ext.Brainboxes.Models.Settings.Device.Subscription
+        ///   Looks up a localized string similar to @model MultiPlug.Base.Http.EdgeApp
+        ///
+        ///&lt;div class=&quot;row-fluid&quot;&gt;
+        ///    &lt;div class=&quot;box&quot;&gt;
+        ///        &lt;div class=&quot;span2&quot;&gt;
+        ///            &lt;a style=&quot;line-height: 52px;&quot; href=&quot;#&quot;&gt;&lt;img alt=&quot;Brainboxes Logo&quot; src=&quot;@Raw(Model.Context.Paths.Assets)images/brainboxes.png&quot;&gt;&lt;/a&gt;
+        ///        &lt;/div&gt;
+        ///        &lt;div class=&quot;span8&quot;&gt;
+        ///            &lt;p style=&quot;font-size:22.75px; padding-top:10px; text-align:center;&quot;&gt;About&lt;/p&gt;
+        ///        &lt;/div&gt;
+        ///    &lt;/div&gt;
+        ///&lt;/div&gt;
+        ///
+        ///&lt;section class=&quot;row-fluid&quot;&gt;
+        ///
+        ///    @Include(&quot;MultiPlug.Ext.Brainboxes.Brainboxes [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string SettingsAbout {
+            get {
+                return ResourceManager.GetString("SettingsAbout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @model MultiPlug.Base.Http.EdgeApp
+        ///@functions {
+        ///    public string NavLocationIsHome()
+        ///    {
+        ///        return Model.Context.Paths.Current == Model.Context.Paths.Home ? &quot;active&quot; : string.Empty;
+        ///    }
+        ///
+        ///    public string NavLocationIsAbout()
+        ///    {
+        ///        return Model.Context.Paths.Current == Model.Context.Paths.Home + &quot;about/&quot; ? &quot;active&quot; : string.Empty;
+        ///    }
+        ///}
+        ///
+        ///&lt;div class=&quot;row-fluid&quot;&gt;
+        ///    &lt;ul class=&quot;nav nav-tabs&quot;&gt;
+        ///        &lt;li class=&quot;@NavLocationIsHome()&quot;&gt;&lt;a href=&quot;@Raw(Model.Context.Paths.Home)&quot;&gt;D [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string SettingsNavigation {
+            get {
+                return ResourceManager.GetString("SettingsNavigation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @model MultiPlug.Base.Http.EdgeApp
         ///
         ///&lt;form action=&quot;&quot; method=&quot;post&quot; accept-charset=&quot;utf-8&quot; enctype=&quot;application/x-www-form-urlencoded&quot;&gt;
         ///    &lt;section class=&quot;row-fluid&quot;&gt;
@@ -284,10 +315,10 @@ namespace MultiPlug.Ext.Brainboxes.Properties {
         ///        &lt;div class=&quot;row-fluid&quot;&gt;
         ///            &lt;div class=&quot;box&quot;&gt;
         ///                &lt;div class=&quot;span5&quot;&gt;
-        ///                    &lt;a href=&quot;/&quot;&gt;&lt;img alt=&quot;Brainboxes Logo&quot; src=&quot;assets/brainboxes/images/brainboxes.png&quot;&gt;&lt;/a&gt;
+        ///                    &lt;a href=&quot;/&quot;&gt;&lt;img alt=&quot;Brainboxes Logo&quot; src=&quot;@Raw(Model.Context.Paths.Assets)images/brainboxes.png&quot;&gt;&lt;/a&gt;
         ///                &lt;/div&gt;
         ///                &lt;div class=&quot;span2&quot;&gt;
-        ///                    &lt;p style=&quot;font [rest of string was truncated]&quot;;.
+        ///                    &lt;p style=&quot;font-size:22.75px; padd [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Subscription_html {
             get {

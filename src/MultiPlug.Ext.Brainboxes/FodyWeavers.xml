@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Weavers>
-  <Costura>
-    <ExcludeAssemblies>
-      MultiPlug.Extension.Core
-      MultiPlug.Base
-    </ExcludeAssemblies>
-  </Costura>
-</Weavers>

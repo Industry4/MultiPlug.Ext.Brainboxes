@@ -6,13 +6,12 @@ using MultiPlug.Extension.Core.Http;
 using MultiPlug.Ext.Brainboxes.Models;
 using MultiPlug.Ext.Brainboxes.Properties;
 using MultiPlug.Ext.Brainboxes.Models.Components.Device;
+using MultiPlug.Ext.Brainboxes.Controllers.Settings;
 
 namespace MultiPlug.Ext.Brainboxes
 {
     public class Brainboxes : MultiPlugExtension
     {
-        private HttpEndpoint[] m_Dashboards;
-
         public Brainboxes()
         {
             Core.Instance.EventsUpdated += new EventHandler<Event[]>(OnEventsUpdated);
@@ -54,13 +53,14 @@ namespace MultiPlug.Ext.Brainboxes
             {
                 return new RazorTemplate[]
                 {
-                    new RazorTemplate("BrainboxesDeviceView", Resources.Device_html),
-                    new RazorTemplate("BrainboxesDiscoveryView", Resources.Discovery_html),
-                    new RazorTemplate("BrainboxesSubscription", Resources.Subscription_html),
-                    new RazorTemplate("BrainboxesSettingsView", Resources.Settings_html),
-                    new RazorTemplate("BrainboxesDeviceDefaults", Resources.Defaults_html),
-                    new RazorTemplate("BrainboxesDeviceNotFound", Resources.DeviceNotFound_html),
-                    new RazorTemplate("BrainboxesOldSettingsView", Resources.OldSettings_html)
+                    new RazorTemplate(Templates.SettingsNavigation, Resources.SettingsNavigation),
+                    new RazorTemplate(Templates.SettingsDevice, Resources.Device_html),
+                    new RazorTemplate(Templates.SettingsDiscovery, Resources.Discovery_html),
+                    new RazorTemplate(Templates.SettingsDeviceSubscription, Resources.Subscription_html),
+                    new RazorTemplate(Templates.SettingsDevices, Resources.Settings_html),
+                    new RazorTemplate(Templates.SettingsDeviceDefaults, Resources.Defaults_html),
+                    new RazorTemplate(Templates.SettingsDeviceNotFound, Resources.DeviceNotFound_html),
+                    new RazorTemplate(Templates.SettingsAbout, Resources.SettingsAbout)
                 };
             }
         }
@@ -124,13 +124,6 @@ namespace MultiPlug.Ext.Brainboxes
         {
             Core.Instance.Shutdown();
         }
-
-        //public override void Load( KeyValuesJson[] config)
-        //{
-        //    var text = KeyValuesJson.Stringify(config);
-
-        //    File.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "debug.json"), text);
-        //}
 
         public void Load(Models.Load.Root config)
         {

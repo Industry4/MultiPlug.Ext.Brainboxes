@@ -3,8 +3,6 @@ using System.Linq;
 using System.Collections.Generic;
 using MultiPlug.Base.Attribute;
 using MultiPlug.Base.Http;
-using MultiPlug.Ext.Brainboxes.Models.Settings;
-using MultiPlug.Ext.Brainboxes.Models.Components;
 using MultiPlug.Ext.Brainboxes.Models.Components.Device;
 using MultiPlug.Ext.Brainboxes.Models.Settings.Home;
 
@@ -15,8 +13,6 @@ namespace MultiPlug.Ext.Brainboxes.Controllers.Settings.Home
     {
         public Response Get()
         {
-
-
             return new Response
             {
                 Model = new Models.Settings.Home.Home
@@ -25,8 +21,7 @@ namespace MultiPlug.Ext.Brainboxes.Controllers.Settings.Home
                     DevicesListEventId = Core.Instance.DevicesListEventId,
                     DiscoverDeviceEventId = Core.Instance.Discovery.Properties.StartDeviceDiscovery.Id
                 },
-                Template = "BrainboxesSettingsView",
-                //HeadMarkUp = "",
+                Template = Templates.SettingsDevices,
                 Events = new Base.Exchange.EventExternal[]
                 {
                     Core.Instance.Discovery.Properties.StartDeviceDiscovery

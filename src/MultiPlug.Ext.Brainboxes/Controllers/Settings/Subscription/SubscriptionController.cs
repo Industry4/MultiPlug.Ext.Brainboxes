@@ -49,7 +49,7 @@ namespace MultiPlug.Ext.Brainboxes.Controllers.Settings.Subscription
                         LowKey = "value",
                         LowValue = "0"
                     },
-                    Template = "BrainboxesSubscription"
+                    Template = Templates.SettingsDeviceSubscription
                 };
             }
 

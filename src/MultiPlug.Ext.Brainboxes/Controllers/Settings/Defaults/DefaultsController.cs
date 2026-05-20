@@ -18,7 +18,7 @@ namespace MultiPlug.Ext.Brainboxes.Controllers.Settings.Defaults
                     FallingEdge = Core.Instance.Defaults.FallingEdge,
                     RisingEdge = Core.Instance.Defaults.RisingEdge
                 },
-                Template = "BrainboxesDeviceDefaults",
+                Template = Templates.SettingsDeviceDefaults,
             };
         }
 

@@ -19,10 +19,7 @@ namespace MultiPlug.Ext.Brainboxes.Controllers.Settings
                     StartDeviceDiscoveryEventId = Core.Instance.Discovery.Properties.StartDeviceDiscovery.Id,
                     StartDeviceDiscoveryEventDescription = Core.Instance.Discovery.Properties.StartDeviceDiscovery.Description,
                 },
-                Template = "BrainboxesDiscoveryView",
-                HeadMarkUp = "",
-                Events = null,
-                Subscriptions = null
+                Template = Templates.SettingsDiscovery
             };
         }
 
@@ -38,8 +35,8 @@ namespace MultiPlug.Ext.Brainboxes.Controllers.Settings
 
             return new Response
             {
-                Location = new Uri(Context.Referrer.ToString().Replace("discovery/", "")),
-                StatusCode = System.Net.HttpStatusCode.Redirect
+                Location = Context.Request,
+                StatusCode = System.Net.HttpStatusCode.Moved
             };
         }
     }
