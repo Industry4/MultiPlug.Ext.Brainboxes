@@ -10,6 +10,8 @@
     <icon>images\multiplugico.png</icon>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Brainboxes Extension for the MultiPlug Edge Computing Platform (https://www.multiplug.app)</description>
+    <repository type="git" url="https://github.com/Industry4/MultiPlug.Ext.Brainboxes" />
+	<license type="expression">MIT</license>
     <releaseNotes>Application Use:
 * Connect to Brainboxes Ltd digital Input and Output hardware - For the full product range view http://www.brainboxes.com/remote-io
 
